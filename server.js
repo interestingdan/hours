@@ -1,9 +1,11 @@
+require('dotenv').config()
 const express = require("express");
 const app = express();
 const port = 3000;
 const axios = require('axios');
 const bodyParser = require("body-parser");
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 app.use(
   bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -12,18 +14,32 @@ app.get('/',
     res.sendFile(__dirname + '/views/index.html')});
 app.use(express.static(__dirname+ '/public/'));
 app.listen(port, () => console.log(`App listening on port ${port}!`))
-mongoose.connect('mongodb+srv://amatthews:ceek%2dcler4FRIW@cluster0-nrqcd.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true });
 
 const searchAll = function(done) {
-	results = Person.find(function(error, data){
-		if (error) console.log(error);
-		return data;
+	Hour.find(null,function(err, data){
+		if (err) console.log(error);
+			console.log(data);
 		});
-	done(null, data);
-	console.log(data);
+
 	}
+
+var idSchema = new Schema({
+	name: String
+});
+
+var Hour = mongoose.model('Hour',idSchema);
+
+var newHour = function(id, done){
+	Hour.create([{name:'testHour'}], function(err, data){
+		if (err) console.log(err);
+		searchAll();
+		done(null, data);
+	})
+}
+
 searchAll();
 
 const productivityObj = {

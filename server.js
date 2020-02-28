@@ -18,14 +18,13 @@ mongoose.connect('mongodb+srv://amatthews:ceek%2dcler4FRIW@cluster0-nrqcd.mongod
 
 const searchAll = function(done) {
 	results = Person.find(function(error, data){
-		if error console.log(error);
+		if (error) console.log(error);
 		return data;
-		}
+		});
 	done(null, data);
 	console.log(data);
-
-	})
-
+	}
+searchAll();
 
 const productivityObj = {
 	"Very Unproductive": 0,

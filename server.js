@@ -14,16 +14,24 @@ app.get('/',
     res.sendFile(__dirname + '/views/index.html')});
 app.use(express.static(__dirname+ '/public/'));
 app.listen(port, () => console.log(`App listening on port ${port}!`))
+
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true });
 
+	var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', function() {
+		console.log("Connection Successful!");
+	}
+);
 const searchAll = function(done) {
 	Hour.find(null,function(err, data){
-		if (err) console.log(error);
+		if (err) console.log(err);
 			console.log(data);
 		});
-
 	}
 
 var idSchema = new Schema({
@@ -31,16 +39,19 @@ var idSchema = new Schema({
 });
 
 var Hour = mongoose.model('Hour',idSchema);
-
-var newHour = function(id, done){
-	Hour.create([{name:'testHour'}], function(err, data){
+var newHour = function(id) {
+	console.log('func start')
+	var testHour = new Hour({'name': id});
+		console.log('new hour created')
+	testHour.save(function(err, data) {
 		if (err) console.log(err);
-		searchAll();
-		done(null, data);
-	})
-}
+	});
 
+//	Hour.create({name:id}, function(err, data){
+
+}
 searchAll();
+
 
 const productivityObj = {
 	"Very Unproductive": 0,

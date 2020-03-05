@@ -6,6 +6,9 @@ const axios = require('axios');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const moment = require('moment');
+moment().format();
+
 app.use(
   bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -23,10 +26,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 db.on('error', console.error.bind(console, 'connection error:'));
 
-db.once('open', function() {
+/*db.once('open', function() {
 		console.log("Connection Successful!");
 	}
-);
+);*/
 const searchAll = function(done) {
 	Hour.find(null,function(err, data){
 		if (err) console.log(err);
@@ -50,7 +53,7 @@ var newHour = function(id) {
 //	Hour.create({name:id}, function(err, data){
 
 }
-searchAll();
+//searchAll();
 
 
 const productivityObj = {
@@ -64,9 +67,29 @@ const productivityObj = {
 app.get('/rtime', function(req, res){
   rTimeTest();
 });
-//rTimeTest();
+
+function getTime(){
+	var endDate = moment();
+	//var beginDate = new Date(moment());
+	//beginDate.setDate(beginDate.getDate() - 1);
+	//console.log(endDate, beginDate);
+	var offset = endDate.utcOffset();
+	endDate = endDate.add(offset, 'minutes');
+	var time = endDate.toISOString();
+	console.log(time);
+	return;
+	beginDate.toISOString().truncate; //
+	endDate.toISOString().truncate;
+	var fetchString = `restrict_begin=${beginDate}&restrict_end=${endDate}`
+	return fetchString;
+	console.log(ISOtimeNow);
+}
+
+getTime();
+
 function rTimeTest() {
 	//select today's date and convert it to a format the API can read
+	var today = getTime();
 	axios.get('https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&restrict_begin=2020-01-01&restrict_end=2020-01-02&perspective=interval&resolution_time=day&restrict_kind=productivity&device_type=offline')
   .then(response => {
     //console.log(response.data);// instead of logging, process the data and display it

@@ -21,15 +21,56 @@ app.listen(port, () => console.log(`App listening on port ${port}!`))
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true });
+var db = mongoose.connection;
 
-	var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
-//db.on('error', console.error.bind(console, 'connection error:'));
-
-/*db.once('open', function() {
+db.once('open', function() {
 		console.log("Connection Successful!");
 	}
-);*/
+);
+
+const prodHour = new Schema ({
+	"Very Unproductive" : Number,
+	"Unproductive" : Number,
+	"Neutral" : Number,
+	"Productive" : Number,
+	"Very Productive" : Number,
+})
+
+const hour = new Schema ({
+	productivity : prodHour,
+	//categories :
+})
+
+const day = new Schema ({
+	00 : hour,
+	01 : hour,
+	02 : hour,
+	03 : hour,
+	04 : hour,
+	05 : hour,
+	06 : hour,
+	07 : hour,
+	08 : hour,
+	09 : hour,
+	10 : hour,
+	11 : hour,
+	12 : hour,
+	13 : hour,
+	14 : hour,
+	15 : hour,
+	16 : hour,
+	17 : hour,
+	18 : hour,
+	19 : hour,
+	20 : hour,
+	21 : hour,
+	22 : hour,
+	23 : hour,
+})
+
+
 const searchAll = function(done) {
 	Hour.find(null,function(err, data){
 		if (err) console.log(err);
@@ -37,7 +78,7 @@ const searchAll = function(done) {
 		});
 	}
 
-var idSchema = new Schema({
+/*var idSchema = new Schema({
 	name: String
 });
 
@@ -48,11 +89,11 @@ var newHour = function(id) {
 		console.log('new hour created')
 	testHour.save(function(err, data) {
 		if (err) console.log(err);
-	});
+	});*/
 
 //	Hour.create({name:id}, function(err, data){
 
-}
+//}
 //searchAll();
 
 
@@ -68,7 +109,7 @@ function getTime(){
 		.slice(0, 10);
 	//console.log(beginDate, endDate);
 	var fetchString = `restrict_begin=${date}&restrict_end=${date}`
-	console.log(fetchString);
+	//console.log(fetchString);
 	return fetchString;
 
 }
@@ -87,7 +128,7 @@ function rTimeTest() {
     console.log(error);
   });}
 
-	rTimeTest();
+	//rTimeTest();
 
 	const testResponse = {"data":
 		{rows: [
@@ -157,18 +198,19 @@ switch(row[i][3]) {
 	break;
 	}
 if (!day[hour]) {
-	day[hour] = {};
+	day[hour] = {productivity:{}};
 	}
-if (day[hour][prodLevel]) {
-	day[hour][prodLevel] += row[i][1];
+if (day[hour]["productivity"][prodLevel]) {
+	day[hour]["productivity"][prodLevel] += row[i][1];
 } else {
-	day[hour][prodLevel] = row[i][1]
+	day[hour]["productivity"][prodLevel] = row[i][1]
 }
 //console.log(hour);
 //console.log(day[hour]);
 	};
 	console.log(day);
+
 }
-APIparse(testResponse);
+//APIparse(testResponse);
 
 module.exports = app;

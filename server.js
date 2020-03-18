@@ -38,45 +38,57 @@ const prodHour = new Schema ({
 	"Very Productive" : Number,
 })
 
-const hour = new Schema ({
+const hourSchema = new Schema ({
 	productivity : prodHour,
 	//categories :
 })
 
-const day = new Schema ({
-	00 : hour,
-	01 : hour,
-	02 : hour,
-	03 : hour,
-	04 : hour,
-	05 : hour,
-	06 : hour,
-	07 : hour,
-	08 : hour,
-	09 : hour,
-	10 : hour,
-	11 : hour,
-	12 : hour,
-	13 : hour,
-	14 : hour,
-	15 : hour,
-	16 : hour,
-	17 : hour,
-	18 : hour,
-	19 : hour,
-	20 : hour,
-	21 : hour,
-	22 : hour,
-	23 : hour,
+const daySchema = new Schema ({
+	00 : hourSchema,
+	01 : hourSchema,
+	02 : hourSchema,
+	03 : hourSchema,
+	04 : hourSchema,
+	05 : hourSchema,
+	06 : hourSchema,
+	07 : hourSchema,
+	08 : hourSchema,
+	09 : hourSchema,
+	10 : hourSchema,
+	11 : hourSchema,
+	12 : hourSchema,
+	13 : hourSchema,
+	14 : hourSchema,
+	15 : hourSchema,
+	16 : hourSchema,
+	17 : hourSchema,
+	18 : hourSchema,
+	19 : hourSchema,
+	20 : hourSchema,
+	21 : hourSchema,
+	22 : hourSchema,
+	23 : hourSchema,
 })
 
+var Day = mongoose.model('Day',daySchema);
+
+var newDay = function(record) {
+		console.log('func start');
+	var thisDay = new Day(record);
+		console.log('new day created')
+	thisDay.save(function(err, data) {
+		if (err) console.log(err);
+	});
+}
 
 const searchAll = function(done) {
-	Hour.find(null,function(err, data){
+	Day.find(null,function(err, data){
 		if (err) console.log(err);
 			console.log(data);
 		});
 	}
+
+//searchAll();
 
 /*var idSchema = new Schema({
 	name: String
@@ -90,6 +102,8 @@ var newHour = function(id) {
 	testHour.save(function(err, data) {
 		if (err) console.log(err);
 	});*/
+
+
 
 //	Hour.create({name:id}, function(err, data){
 
@@ -107,20 +121,19 @@ function getTime(){
 	date = date.add(offset, 'minutes')
 		.toISOString()
 		.slice(0, 10);
-	//console.log(beginDate, endDate);
-	var fetchString = `restrict_begin=${date}&restrict_end=${date}`
-	//console.log(fetchString);
-	return fetchString;
+	return date;
 
 }
 
-getTime();
+//getTime();
 
 function rTimeTest() {
-	var today = getTime();//select today's date and convert it to a format the API can read
-	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${today}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
+	var date = getTime();//select today's date and convert it to a format the API can read
+	var fetchString = `restrict_begin=${date}&restrict_end=${date}`
+	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
   .then(response => {
     console.log(response.data);// instead of logging, process the data and display it
+		
 		//APIparse(response);
 		//console.log(productivityObj);
   })
@@ -167,15 +180,16 @@ function rTimeTest() {
     [ '2020-03-11T17:00:00', 30, 1, 0 ],
     [ '2020-03-11T17:00:00', 13, 1, 1 ],
     [ '2020-03-11T17:00:00', 3, 1, -1 ],
-  ]
+  ],
+		"date": "2020-01-01"
 		}
 	}
 
 function APIparse(response) {
 	var {rows:row} = response.data;
-
+	var date = response.data.date;
 //	console.log(row);
-	var day = {};
+	var day = {'date' : date};
 	for (var i = 0; i < row.length; i++) {
 		var hour = row[i][0].slice(11, 13); //pick the hour out of the
 		//console.log(hour);
@@ -209,7 +223,7 @@ if (day[hour]["productivity"][prodLevel]) {
 //console.log(day[hour]);
 	};
 	console.log(day);
-
+	newDay(day);
 }
 //APIparse(testResponse);
 

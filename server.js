@@ -73,9 +73,8 @@ const daySchema = new Schema ({
 var Day = mongoose.model('Day',daySchema);
 
 var newDay = function(record) {
-		console.log('func start');
 	var thisDay = new Day(record);
-		console.log('new day created')
+	console.log(record);
 	thisDay.save(function(err, data) {
 		if (err) console.log(err);
 	});
@@ -88,7 +87,6 @@ const searchAll = function(done) {
 		});
 	}
 
-//searchAll();
 
 /*var idSchema = new Schema({
 	name: String
@@ -111,9 +109,9 @@ var newHour = function(id) {
 //searchAll();
 
 
-app.get('/rtime', function(req, res){
+/*app.get('/rtime', function(req, res){
   rTimeTest();
-});
+});*/
 
 function getTime(){
 	var date = moment().subtract(1, 'days');
@@ -125,25 +123,25 @@ function getTime(){
 
 }
 
-//getTime();
+
 
 function rTimeTest() {
 	var date = getTime();//select today's date and convert it to a format the API can read
 	var fetchString = `restrict_begin=${date}&restrict_end=${date}`
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
-  .then(response => {
-    console.log(response.data);// instead of logging, process the data and display it
-		
-		//APIparse(response);
+	.then(response => {
+		//console.log(response.data);// instead of logging, process the data and display it
+		response.date = date;
+		APIparse(response);
 		//console.log(productivityObj);
-  })
-  .catch(error => {
-    console.log(error);
-  });}
+	})
+	.catch(error => {
+	console.log(error);
+	});}
 
-	//rTimeTest();
 
-	const testResponse = {"data":
+
+const testResponse = {"data":
 		{rows: [
     [ '2020-03-11T00:00:00', 59, 1, 1 ],
     [ '2020-03-11T00:00:00', 49, 1, 0 ],
@@ -187,7 +185,7 @@ function rTimeTest() {
 
 function APIparse(response) {
 	var {rows:row} = response.data;
-	var date = response.data.date;
+	var date = response.date;
 //	console.log(row);
 	var day = {'date' : date};
 	for (var i = 0; i < row.length; i++) {
@@ -222,9 +220,13 @@ if (day[hour]["productivity"][prodLevel]) {
 //console.log(hour);
 //console.log(day[hour]);
 	};
+	console.log('Parsed:');
 	console.log(day);
 	newDay(day);
 }
 //APIparse(testResponse);
+//rTimeTest();
+//getTime();
+//searchAll();
 
 module.exports = app;

@@ -39,36 +39,15 @@ const prodHour = new Schema ({
 })
 
 const hourSchema = new Schema ({
+	hourStarts : Number,
 	productivity : prodHour,
 	//categories :
 })
 
 const daySchema = new Schema ({
-	00 : hourSchema,
-	01 : hourSchema,
-	02 : hourSchema,
-	03 : hourSchema,
-	04 : hourSchema,
-	05 : hourSchema,
-	06 : hourSchema,
-	07 : hourSchema,
-	08 : hourSchema,
-	09 : hourSchema,
-	10 : hourSchema,
-	11 : hourSchema,
-	12 : hourSchema,
-	13 : hourSchema,
-	14 : hourSchema,
-	15 : hourSchema,
-	16 : hourSchema,
-	17 : hourSchema,
-	18 : hourSchema,
-	19 : hourSchema,
-	20 : hourSchema,
-	21 : hourSchema,
-	22 : hourSchema,
-	23 : hourSchema,
-})
+	hours: [hourSchema],
+	date: String
+	})
 
 var Day = mongoose.model('Day',daySchema);
 
@@ -86,6 +65,10 @@ const searchAll = function(done) {
 			console.log(data);
 		});
 	}
+
+async function flush() {
+	await Day.deleteMany({});
+}
 
 
 /*var idSchema = new Schema({
@@ -141,45 +124,54 @@ function rTimeTest() {
 
 
 
-const testResponse = {"data":
+const testResponse = {"date": "2020-01-01",
+	"data":
 		{rows: [
     [ '2020-03-11T00:00:00', 59, 1, 1 ],
     [ '2020-03-11T00:00:00', 49, 1, 0 ],
     [ '2020-03-11T00:00:00', 15, 1, -2 ],
-    [ '2020-03-11T07:00:00', 357, 1, -2 ],
+
+		[ '2020-03-11T07:00:00', 357, 1, -2 ],
     [ '2020-03-11T07:00:00', 320, 1, 0 ],
     [ '2020-03-11T07:00:00', 58, 1, -1 ],
     [ '2020-03-11T07:00:00', 19, 1, 1 ],
-    [ '2020-03-11T08:00:00', 1452, 1, -2 ],
+
+		[ '2020-03-11T08:00:00', 1452, 1, -2 ],
     [ '2020-03-11T10:00:00', 67, 1, -2 ],
-    [ '2020-03-11T11:00:00', 1013, 1, -2 ],
-    [ '2020-03-11T12:00:00', 1303, 1, -2 ],
+
+		[ '2020-03-11T11:00:00', 1013, 1, -2 ],
+
+		[ '2020-03-11T12:00:00', 1303, 1, -2 ],
     [ '2020-03-11T12:00:00', 915, 1, 0 ],
     [ '2020-03-11T12:00:00', 215, 1, 2 ],
     [ '2020-03-11T12:00:00', 116, 1, 1 ],
     [ '2020-03-11T12:00:00', 105, 1, -1 ],
-    [ '2020-03-11T13:00:00', 1432, 1, 0 ],
+
+		[ '2020-03-11T13:00:00', 1432, 1, 0 ],
     [ '2020-03-11T13:00:00', 1282, 1, -2 ],
     [ '2020-03-11T13:00:00', 293, 1, 2 ],
     [ '2020-03-11T13:00:00', 73, 1, -1 ],
     [ '2020-03-11T13:00:00', 52, 1, 1 ],
-    [ '2020-03-11T14:00:00', 2169, 1, 0 ],
+
+		[ '2020-03-11T14:00:00', 2169, 1, 0 ],
     [ '2020-03-11T14:00:00', 339, 1, 1 ],
     [ '2020-03-11T14:00:00', 206, 1, -1 ],
     [ '2020-03-11T14:00:00', 65, 1, 2 ],
-    [ '2020-03-11T15:00:00', 2728, 1, 0 ],
+
+		[ '2020-03-11T15:00:00', 2728, 1, 0 ],
     [ '2020-03-11T15:00:00', 212, 1, -2 ],
     [ '2020-03-11T15:00:00', 83, 1, 1 ],
     [ '2020-03-11T15:00:00', 24, 1, 2 ],
-    [ '2020-03-11T16:00:00', 142, 1, -1 ],
+
+		[ '2020-03-11T16:00:00', 142, 1, -1 ],
     [ '2020-03-11T16:00:00', 62, 1, 0 ],
     [ '2020-03-11T16:00:00', 34, 1, 1 ],
-    [ '2020-03-11T17:00:00', 629, 1, -2 ],
+
+		[ '2020-03-11T17:00:00', 629, 1, -2 ],
     [ '2020-03-11T17:00:00', 30, 1, 0 ],
     [ '2020-03-11T17:00:00', 13, 1, 1 ],
     [ '2020-03-11T17:00:00', 3, 1, -1 ],
-  ],
-		"date": "2020-01-01"
+  ]
 		}
 	}
 
@@ -187,9 +179,12 @@ function APIparse(response) {
 	var {rows:row} = response.data;
 	var date = response.date;
 //	console.log(row);
-	var day = {'date' : date};
+	var day = {
+		'date' : date,
+		hours:[]};
+	day.hours.length = 24;
 	for (var i = 0; i < row.length; i++) {
-		var hour = row[i][0].slice(11, 13); //pick the hour out of the
+		var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
 		//console.log(hour);
 
 switch(row[i][3]) {
@@ -209,22 +204,23 @@ switch(row[i][3]) {
 	var prodLevel = "Very Productive";
 	break;
 	}
-if (!day[hour]) {
-	day[hour] = {productivity:{}};
+if (!day.hours[hourNumb]) {
+	day.hours[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
-if (day[hour]["productivity"][prodLevel]) {
-	day[hour]["productivity"][prodLevel] += row[i][1];
+if (day.hours[hourNumb]["productivity"][prodLevel]) {
+	console.log('ping');
+	day.hours[hourNumb]["productivity"][prodLevel] += row[i][1];
 } else {
-	day[hour]["productivity"][prodLevel] = row[i][1]
+	day.hours[hourNumb]["productivity"][prodLevel] = row[i][1]
 }
 //console.log(hour);
 //console.log(day[hour]);
 	};
-	console.log('Parsed:');
-	console.log(day);
-	newDay(day);
+	//console.log('Parsed:');
+	console.log(JSON.stringify(day));
+	//newDay(day);
 }
-//APIparse(testResponse);
+APIparse(testResponse);
 //rTimeTest();
 //getTime();
 //searchAll();

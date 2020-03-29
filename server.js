@@ -110,18 +110,18 @@ function getTime(){
 
 function rTimeTest() {
 	var date = getTime();//select today's date and convert it to a format the API can read
-	var fetchString = `restrict_begin=${date}&restrict_end=${date}`
+	var fetchString = `restrict_begin=2020-03-01&restrict_end=2020-03-29`
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 	.then(response => {
 		//console.log(response.data);// instead of logging, process the data and display it
-		response.date = date;
-		APIparse(response);
+		//response.date = date;
+		checkForDupes(response);
+		//APIparse(response);
 		//console.log(productivityObj);
 	})
 	.catch(error => {
 	console.log(error);
 	});}
-
 
 
 const testResponse = {"date": "2020-01-01",
@@ -175,6 +175,26 @@ const testResponse = {"date": "2020-01-01",
 		}
 	}
 
+
+	function checkForDupes(response) {
+		var {rows:row} = response.data;
+		var units = {};
+		for (var i = 0; i < row.length; i++) {
+			var dayHour = row[i][0];
+			var prodLevel = row[i][3];
+			if (!units[dayHour]) {
+				units[dayHour] = {};
+			}
+			if (units[dayHour][prodLevel]) {
+				break;
+				console.log('dupe detected')
+			} else {
+				units[dayHour][prodLevel] = [row[i][1]]
+			}
+			console.log(units)
+		}
+	}
+
 function APIparse(response) {
 	var {rows:row} = response.data;
 	var date = response.date;
@@ -204,10 +224,10 @@ switch(row[i][3]) {
 	var prodLevel = "Very Productive";
 	break;
 	}
-if (!day.hours[hourNumb]) {
-	day.hours[hourNumb] = {hourStarts: hourNumb, productivity:{}};
+	if (!day.hours[hourNumb]) {
+		day.hours[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
-if (day.hours[hourNumb]["productivity"][prodLevel]) {
+	if (day.hours[hourNumb]["productivity"][prodLevel]) {
 	console.log('ping');
 	day.hours[hourNumb]["productivity"][prodLevel] += row[i][1];
 } else {
@@ -217,11 +237,11 @@ if (day.hours[hourNumb]["productivity"][prodLevel]) {
 //console.log(day[hour]);
 	};
 	//console.log('Parsed:');
-	console.log(JSON.stringify(day));
+	//console.log(JSON.stringify(day));
 	//newDay(day);
 }
-APIparse(testResponse);
-//rTimeTest();
+//APIparse(testResponse);
+rTimeTest();
 //getTime();
 //searchAll();
 

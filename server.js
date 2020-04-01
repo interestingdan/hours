@@ -96,26 +96,31 @@ var newHour = function(id) {
   rTimeTest();
 });*/
 
-function getTime(){
-	var date = moment().subtract(1, 'days');
-	var offset = date.utcOffset();
-	date = date.add(offset, 'minutes')
+function parseTime(dateObj){
+	//var date = dateObj.subtract(1, 'days');
+	var date =dateObj
+	var offset = dateObj.utcOffset();
+	dateString = dateObj.add(offset, 'minutes')
 		.toISOString()
 		.slice(0, 10);
-	return date;
-
+	return dateString;
 }
 
 
+function logYesterday(){
+	var yesterday = moment().subtract(1, 'days');
+	logDay(yesterday);
+}
 
-function rTimeTest() {
-	var date = getTime();//select today's date and convert it to a format the API can read
-	var fetchString = `restrict_begin=2020-03-01&restrict_end=2020-03-29`
+function logDay(momentObj) {
+	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
+	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 	.then(response => {
 		//console.log(response.data);// instead of logging, process the data and display it
-		//response.date = date;
-		checkForDupes(response);
+		response.dateString = dateString;
+		response.dateObj = momentObj;
+		//checkForDupes(response);
 		//APIparse(response);
 		//console.log(productivityObj);
 	})
@@ -124,83 +129,12 @@ function rTimeTest() {
 	});}
 
 
-const testResponse = {"date": "2020-01-01",
-	"data":
-		{rows: [
-    [ '2020-03-11T00:00:00', 59, 1, 1 ],
-    [ '2020-03-11T00:00:00', 49, 1, 0 ],
-    [ '2020-03-11T00:00:00', 15, 1, -2 ],
-
-		[ '2020-03-11T07:00:00', 357, 1, -2 ],
-    [ '2020-03-11T07:00:00', 320, 1, 0 ],
-    [ '2020-03-11T07:00:00', 58, 1, -1 ],
-    [ '2020-03-11T07:00:00', 19, 1, 1 ],
-
-		[ '2020-03-11T08:00:00', 1452, 1, -2 ],
-    [ '2020-03-11T10:00:00', 67, 1, -2 ],
-
-		[ '2020-03-11T11:00:00', 1013, 1, -2 ],
-
-		[ '2020-03-11T12:00:00', 1303, 1, -2 ],
-    [ '2020-03-11T12:00:00', 915, 1, 0 ],
-    [ '2020-03-11T12:00:00', 215, 1, 2 ],
-    [ '2020-03-11T12:00:00', 116, 1, 1 ],
-    [ '2020-03-11T12:00:00', 105, 1, -1 ],
-
-		[ '2020-03-11T13:00:00', 1432, 1, 0 ],
-    [ '2020-03-11T13:00:00', 1282, 1, -2 ],
-    [ '2020-03-11T13:00:00', 293, 1, 2 ],
-    [ '2020-03-11T13:00:00', 73, 1, -1 ],
-    [ '2020-03-11T13:00:00', 52, 1, 1 ],
-
-		[ '2020-03-11T14:00:00', 2169, 1, 0 ],
-    [ '2020-03-11T14:00:00', 339, 1, 1 ],
-    [ '2020-03-11T14:00:00', 206, 1, -1 ],
-    [ '2020-03-11T14:00:00', 65, 1, 2 ],
-
-		[ '2020-03-11T15:00:00', 2728, 1, 0 ],
-    [ '2020-03-11T15:00:00', 212, 1, -2 ],
-    [ '2020-03-11T15:00:00', 83, 1, 1 ],
-    [ '2020-03-11T15:00:00', 24, 1, 2 ],
-
-		[ '2020-03-11T16:00:00', 142, 1, -1 ],
-    [ '2020-03-11T16:00:00', 62, 1, 0 ],
-    [ '2020-03-11T16:00:00', 34, 1, 1 ],
-
-		[ '2020-03-11T17:00:00', 629, 1, -2 ],
-    [ '2020-03-11T17:00:00', 30, 1, 0 ],
-    [ '2020-03-11T17:00:00', 13, 1, 1 ],
-    [ '2020-03-11T17:00:00', 3, 1, -1 ],
-  ]
-		}
-	}
-
-
-	function checkForDupes(response) {
-		var {rows:row} = response.data;
-		var units = {};
-		for (var i = 0; i < row.length; i++) {
-			var dayHour = row[i][0];
-			var prodLevel = row[i][3];
-			if (!units[dayHour]) {
-				units[dayHour] = {};
-			}
-			if (units[dayHour][prodLevel]) {
-				break;
-				console.log('dupe detected')
-			} else {
-				units[dayHour][prodLevel] = [row[i][1]]
-			}
-			console.log(units)
-		}
-	}
-
 function APIparse(response) {
 	var {rows:row} = response.data;
-	var date = response.date;
+	var dateString = response.dateString;
 //	console.log(row);
 	var day = {
-		'date' : date,
+		'date': date,
 		hours:[]};
 	day.hours.length = 24;
 	for (var i = 0; i < row.length; i++) {
@@ -228,12 +162,11 @@ switch(row[i][3]) {
 		day.hours[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
 	if (day.hours[hourNumb]["productivity"][prodLevel]) {
-	console.log('ping');
 	day.hours[hourNumb]["productivity"][prodLevel] += row[i][1];
 } else {
 	day.hours[hourNumb]["productivity"][prodLevel] = row[i][1]
 }
-//console.log(hour);
+console.log(hour);
 //console.log(day[hour]);
 	};
 	//console.log('Parsed:');
@@ -241,8 +174,79 @@ switch(row[i][3]) {
 	//newDay(day);
 }
 //APIparse(testResponse);
-rTimeTest();
+logYesterday();
 //getTime();
 //searchAll();
+
+
+const testResponse = {"date": "2020-01-01",
+"data":
+{rows: [
+	[ '2020-03-11T00:00:00', 59, 1, 1 ],
+	[ '2020-03-11T00:00:00', 49, 1, 0 ],
+	[ '2020-03-11T00:00:00', 15, 1, -2 ],
+
+	[ '2020-03-11T07:00:00', 357, 1, -2 ],
+	[ '2020-03-11T07:00:00', 320, 1, 0 ],
+	[ '2020-03-11T07:00:00', 58, 1, -1 ],
+	[ '2020-03-11T07:00:00', 19, 1, 1 ],
+
+	[ '2020-03-11T08:00:00', 1452, 1, -2 ],
+	[ '2020-03-11T10:00:00', 67, 1, -2 ],
+
+	[ '2020-03-11T11:00:00', 1013, 1, -2 ],
+
+	[ '2020-03-11T12:00:00', 1303, 1, -2 ],
+	[ '2020-03-11T12:00:00', 915, 1, 0 ],
+	[ '2020-03-11T12:00:00', 215, 1, 2 ],
+	[ '2020-03-11T12:00:00', 116, 1, 1 ],
+	[ '2020-03-11T12:00:00', 105, 1, -1 ],
+
+	[ '2020-03-11T13:00:00', 1432, 1, 0 ],
+	[ '2020-03-11T13:00:00', 1282, 1, -2 ],
+	[ '2020-03-11T13:00:00', 293, 1, 2 ],
+	[ '2020-03-11T13:00:00', 73, 1, -1 ],
+	[ '2020-03-11T13:00:00', 52, 1, 1 ],
+
+	[ '2020-03-11T14:00:00', 2169, 1, 0 ],
+	[ '2020-03-11T14:00:00', 339, 1, 1 ],
+	[ '2020-03-11T14:00:00', 206, 1, -1 ],
+	[ '2020-03-11T14:00:00', 65, 1, 2 ],
+
+	[ '2020-03-11T15:00:00', 2728, 1, 0 ],
+	[ '2020-03-11T15:00:00', 212, 1, -2 ],
+	[ '2020-03-11T15:00:00', 83, 1, 1 ],
+	[ '2020-03-11T15:00:00', 24, 1, 2 ],
+
+	[ '2020-03-11T16:00:00', 142, 1, -1 ],
+	[ '2020-03-11T16:00:00', 62, 1, 0 ],
+	[ '2020-03-11T16:00:00', 34, 1, 1 ],
+
+	[ '2020-03-11T17:00:00', 629, 1, -2 ],
+	[ '2020-03-11T17:00:00', 30, 1, 0 ],
+	[ '2020-03-11T17:00:00', 13, 1, 1 ],
+	[ '2020-03-11T17:00:00', 3, 1, -1 ],
+]
+}
+}
+
+	function checkForDupes(response) {
+		var {rows:row} = response.data;
+		var units = {};
+		for (var i = 0; i < row.length; i++) {
+			var dayHour = row[i][0];
+			var prodLevel = row[i][3];
+			if (!units[dayHour]) {
+				units[dayHour] = {};
+			}
+			if (units[dayHour][prodLevel]) {
+				break;
+				console.log('dupe detected')
+			} else {
+				units[dayHour][prodLevel] = [row[i][1]]
+			}
+			console.log(units)
+		}
+	}
 
 module.exports = app;

@@ -70,7 +70,6 @@ async function flush() {
 	await Day.deleteMany({});
 }
 
-
 /*var idSchema = new Schema({
 	name: String
 });
@@ -96,6 +95,171 @@ var newHour = function(id) {
   rTimeTest();
 });*/
 
+
+const userCarrotStick = [
+	{hourStarts: 0, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 2, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 3, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 4, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 5, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 6, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 7, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 8, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 9, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 10, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 11, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 12, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 13, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 14, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 15, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 16, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8}
+	},
+	{hourStarts: 17, byProd:{
+		VUnp: -4,
+		Unpr: -2,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 18, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 19, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 20, byProd:{
+		VUnp: -8,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 21, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0}
+	},
+	{hourStarts: 22, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	},
+	{hourStarts: 23, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6}
+	}
+]; // replace this with object in user instance
+
 function parseTime(dateObj){
 	//var date = dateObj.subtract(1, 'days');
 	var date =dateObj
@@ -119,9 +283,9 @@ function logDay(momentObj) {
 	.then(response => {
 		//console.log(response.data);// instead of logging, process the data and display it
 		response.dateString = dateString;
-		response.dateObj = momentObj;
+		response.dateDate = momentObj._d;
 		//checkForDupes(response);
-		//APIparse(response);
+		APIparse(response);
 		//console.log(productivityObj);
 	})
 	.catch(error => {
@@ -130,56 +294,82 @@ function logDay(momentObj) {
 
 
 function APIparse(response) {
-	var {rows:row} = response.data;
+	var {rows:row} = response.data; //no variables that end in 's'
 	var dateString = response.dateString;
 //	console.log(row);
 	var day = {
-		'date': date,
-		hours:[]};
-	day.hours.length = 24;
+		'date': response.dateString,
+		'dateObj': response.dateDate,
+		hourArray:[]};
+	day.hourArray.length = 24;
 	for (var i = 0; i < row.length; i++) {
 		var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
 		//console.log(hour);
 
-switch(row[i][3]) {
+switch(row[i][3]) {  //pick the productivity level from the row an
 	case -2:
-	var prodLevel = "Very Unproductive";
+	var prodLevel = "VUnp";
 	break;
 	case -1:
-	var prodLevel = "Unproductive";
+	var prodLevel = "Unpr";
 	break;
 	case 0:
-	var prodLevel = "Neutral";
+	var prodLevel = "Neut";
 	break;
 	case 1:
-	var prodLevel = "Productive";
+	var prodLevel = "Prod";
 	break;
 	case 2:
-	var prodLevel = "Very Productive";
+	var prodLevel = "VPro";
 	break;
 	}
-	if (!day.hours[hourNumb]) {
-		day.hours[hourNumb] = {hourStarts: hourNumb, productivity:{}};
+	if (!day.hourArray[hourNumb]) {
+		console.log(day.hourArray[hourNumb-1]);
+		day.hourArray[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
-	if (day.hours[hourNumb]["productivity"][prodLevel]) {
-	day.hours[hourNumb]["productivity"][prodLevel] += row[i][1];
-} else {
-	day.hours[hourNumb]["productivity"][prodLevel] = row[i][1]
-}
-console.log(hour);
+	day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
+
 //console.log(day[hour]);
 	};
+	console.log(day);
+	carrotStick(day);
+	//console.log(day.hour);
 	//console.log('Parsed:');
 	//console.log(JSON.stringify(day));
 	//newDay(day);
 }
+
+function carrotStick(dayRecord) {
+	var dayProcessed = {
+	daySticks: 0,
+	dayCarrots: 0
+	}
+	for (var i = 0; i < 24; i++) {
+		if (dayRecord.hour[i]) {//dayRecord may be empty for this hour
+			loopableCarrotStick = userCarrotStick[i].entries;
+			for (var j = 0; j < loopableCarrotStick.length; j++) {
+				loopableCarrotStick[j]
+			}
+		}
+			if (userCarrotStick[i][] =< 0) {
+				daySticks += userCarrotStick[i].VUnp
+			}
+			/*VUnp
+			Unpr
+			Neut
+			Prod
+			VPro*/
+		}
+	}
+}
+
 //APIparse(testResponse);
-logYesterday();
+//logYesterday();
 //getTime();
 //searchAll();
 
 
-const testResponse = {"date": "2020-01-01",
+/*const testResponse = {"date": "2020-01-01",
 "data":
 {rows: [
 	[ '2020-03-11T00:00:00', 59, 1, 1 ],
@@ -248,5 +438,5 @@ const testResponse = {"date": "2020-01-01",
 			console.log(units)
 		}
 	}
-
+*/
 module.exports = app;

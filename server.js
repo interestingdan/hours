@@ -95,6 +95,7 @@ var newHour = function(id) {
   rTimeTest();
 });*/
 
+const modifier = 0.07;
 
 const userCarrotStick = [
 	{hourStarts: 0, byProd:{
@@ -379,10 +380,9 @@ switch(row[i][3]) {  //pick the productivity level from the row an
 		day.hourArray[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
 	day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
-
 //console.log(day[hour]);
 	};
-	//console.log(day);
+	console.log(day);
 	carrotStick(day);
 	//console.log(day.hour);
 	//console.log('Parsed:');
@@ -393,7 +393,8 @@ switch(row[i][3]) {  //pick the productivity level from the row an
 function carrotStick(dayRecord) {
 	var dayProcessed = {
 		dayStick: 0,
-		dayCarrot: 0
+		dayCarrot: 0,
+		totalScore: 0
 	}
 	//console.log(dayRecord);
 	for (var i = 0; i < dayRecord.hourArray.length - 1; i++) {
@@ -406,25 +407,20 @@ function carrotStick(dayRecord) {
 				var hourRowTimeAmount = loopableHour[j][1];
 				//console.log(hourRowTimeAmount);
 				if (userCarrotStick[i].byProd[hourRowProdLevel] < 0) {
-					dayProcessed.dayStick += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel];
+					dayProcessed.dayStick += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
 				} else if (userCarrotStick[i].byProd[hourRowProdLevel] > 0) {
-					dayProcessed.dayCarrot += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel];
+					dayProcessed.dayCarrot += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
 				}
 			}
 		}
-
-			/*VUnp
-			Unpr
-			Neut
-			Prod
-			VPro*/
-		}
-	console.log(dayProcessed)
 	}
+	dayProcessed.totalScore = dayProcessed.dayStick - dayProcessed.dayCarrot;
+	console.log(dayProcessed)
+}
 
 
-APIparse(testResponse);
-//logYesterday(testResponse);
+//APIparse(testResponse);
+logYesterday(testResponse);
 //getTime();
 //searchAll();
 

@@ -105,7 +105,7 @@ const userCarrotStick = [
 		Prod: -6,
 		VPro: -6}
 	},
-	{hourStarts: 1, byProd:{
+	{hourStarts: 0, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,

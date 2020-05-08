@@ -369,14 +369,16 @@ function logDay(momentObj) {
 				//console.log(day.hourArray[hourNumb-1]);
 				day.hourArray[hourNumb] = {
 					hourStarts: hourNumb,
-					productivity:{}};
+					productivity:{},
+					carrotStick: 0}
+			console.log(day.hourArray[hourNumb - 1])
 			}
 			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
+			day.hourArray[hourNumb].carrotStick += row[i][1] * userCarrotStick[hourNumb].byProd[prodLevel] * modifier;
 
-			//console.log(day.hourArray[hourNumb]);
 		};
 		//console.log(day);
-		carrotStick(day);
+		//carrotStick(day);
 		//console.log(day.hour);
 		//console.log('Parsed:');
 		//console.log(JSON.stringify(day));

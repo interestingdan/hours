@@ -6,6 +6,8 @@ const axios = require('axios');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Day = require('./models/Day');
+const User = require('./models/User');
 const moment = require('moment');
 moment().format();
 
@@ -18,7 +20,7 @@ app.get('/',
 app.use(express.static(__dirname+ '/public/'));
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
-/*mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true });
 var db = mongoose.connection;
@@ -29,27 +31,6 @@ db.once('open', function() {
 		console.log("Connection Successful!");
 	}
 );
-
-const prodHour = new Schema ({
-	"Very Unproductive" : Number,
-	"Unproductive" : Number,
-	"Neutral" : Number,
-	"Productive" : Number,
-	"Very Productive" : Number,
-})
-
-const hourSchema = new Schema ({
-	hourStarts : Number,
-	productivity : prodHour,
-	//categories :
-})
-
-const daySchema = new Schema ({
-	hours: [hourSchema],
-	date: String
-	})
-
-var Day = mongoose.model('Day',daySchema);
 
 var newDay = function(record) {
 	var thisDay = new Day(record);
@@ -382,7 +363,8 @@ switch(row[i][3]) {  //pick the productivity level from the row an
 	var prodLevel = "VPro";
 	break;
 	}
-	if (!day.hourArray[hourNumb]) {
+
+if (!day.hourArray[hourNumb]) {
 		//console.log(day.hourArray[hourNumb-1]);
 		day.hourArray[hourNumb] = {hourStarts: hourNumb, productivity:{}};
 	}
@@ -433,14 +415,14 @@ function carrotStick(dayRecord) {
 //console.log(userCarrotStick[11]);
 //console.log()
 //APIparse(testResponse);
-logYesterday();
+//logYesterday();
 //getTime();
 //searchAll();
 
 
 
 
-	function checkForDupes(response) {
+/*	function checkForDupes(response) {
 		var {rows:row} = response.data;
 		var units = {};
 		for (var i = 0; i < row.length; i++) {
@@ -458,5 +440,6 @@ logYesterday();
 			console.log(units)
 		}
 	}
+*/
 
 module.exports = app;

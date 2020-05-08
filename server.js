@@ -6,8 +6,8 @@ const axios = require('axios');
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Day = require('./models/Day');
-const User = require('./models/User');
+const Day = require("./models/Day.js");
+const User = require("./models/User.js");
 const moment = require('moment');
 moment().format();
 
@@ -22,7 +22,8 @@ app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true });
+	useUnifiedTopology: true,
+	useCreateIndex: true});
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -312,7 +313,7 @@ function parseTime(dateObj){
 
 
 function logYesterday(){
-	var yesterday = moment().subtract(0, 'days');
+	var yesterday = moment().subtract(1, 'days');
 	logDay(yesterday);
 }
 
@@ -333,54 +334,56 @@ function logDay(momentObj) {
 	});}
 
 
-function APIparse(response) {
-	var {rows:row} = response.data; //no variables that end in 's'
-	var dateString = response.dateString;
-//	console.log(row);
-	var day = {
-		'date': response.dateString,
-		'dateObj': response.dateDate,
-		hourArray:[]};
-	day.hourArray.length = 24;
-	for (var i = 0; i < row.length; i++) {
-		var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
-		//console.log(hourNumb);
+	function APIparse(response) {
+		var {rows:row} = response.data; //no variables that end in 's'
+		var dateString = response.dateString;
+		//	console.log(row);
+		var day = {
+			'date': response.dateString,
+			'dateObj': response.dateDate,
+			hourArray:[]
+		};
+		day.hourArray.length = 24;
+		for (var i = 0; i < row.length; i++) {
+			var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
+			//console.log(hourNumb);
+			switch(row[i][3]) {  //pick the productivity level from the row an
+				case -2:
+				var prodLevel = "VUnp";
+				break;
+				case -1:
+				var prodLevel = "Unpr";
+				break;
+				case 0:
+				var prodLevel = "Neut";
+				break;
+				case 1:
+				var prodLevel = "Prod";
+				break;
+				case 2:
+				var prodLevel = "VPro";
+				break;
+			}
 
-switch(row[i][3]) {  //pick the productivity level from the row an
-	case -2:
-	var prodLevel = "VUnp";
-	break;
-	case -1:
-	var prodLevel = "Unpr";
-	break;
-	case 0:
-	var prodLevel = "Neut";
-	break;
-	case 1:
-	var prodLevel = "Prod";
-	break;
-	case 2:
-	var prodLevel = "VPro";
-	break;
-	}
+			if (!day.hourArray[hourNumb]) {
+				//console.log(day.hourArray[hourNumb-1]);
+				day.hourArray[hourNumb] = {
+					hourStarts: hourNumb,
+					productivity:{}};
+			}
+			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
 
-if (!day.hourArray[hourNumb]) {
-		//console.log(day.hourArray[hourNumb-1]);
-		day.hourArray[hourNumb] = {hourStarts: hourNumb, productivity:{}};
+			//console.log(day.hourArray[hourNumb]);
+		};
+		//console.log(day);
+		carrotStick(day);
+		//console.log(day.hour);
+		//console.log('Parsed:');
+		//console.log(JSON.stringify(day));
+		//newDay(day);
 	}
-	day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
-//console.log(day.hourArray[hourNumb]);
-	};
-	//console.log(day);
-	carrotStick(day);
-	//console.log(day.hour);
-	//console.log('Parsed:');
-	//console.log(JSON.stringify(day));
-	//newDay(day);
-}
 
 function carrotStick(dayRecord) {
-	console.log(dayRecord.hourArray[11]);
 	for (var i = 0; i < dayRecord.hourArray.length - 1; i++) {
 		if (dayRecord.hourArray[i]) {//dayRecord may be empty for this hour
 			var loopableHour = Object.entries(dayRecord.hourArray[i].productivity);
@@ -412,10 +415,11 @@ function carrotStick(dayRecord) {
 	//dayProcessed.totalScore = dayProcessed.dayStick + dayProcessed.dayCarrot;
 	//console.log(dayProcessed)
 }
+
 //console.log(userCarrotStick[11]);
 //console.log()
 //APIparse(testResponse);
-//logYesterday();
+logYesterday();
 //getTime();
 //searchAll();
 

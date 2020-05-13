@@ -33,7 +33,7 @@ db.once('open', function() {
 	}
 );
 
-var newDay = function(record) {
+const newDay = function(record) {
 	var thisDay = new Day(record);
 	console.log(record);
 	thisDay.save(function(err, data) {
@@ -52,24 +52,6 @@ async function flush() {
 	await Day.deleteMany({});
 }
 
-/*var idSchema = new Schema({
-	name: String
-});
-
-var Hour = mongoose.model('Hour',idSchema);
-var newHour = function(id) {
-	console.log('func start')
-	var testHour = new Hour({'name': id});
-		console.log('new hour created')
-	testHour.save(function(err, data) {
-		if (err) console.log(err);
-	});*/
-
-
-
-//	Hour.create({name:id}, function(err, data){
-
-//}
 //searchAll();
 
 
@@ -312,12 +294,12 @@ function parseTime(dateObj){
 }
 
 
-function logYesterday(){
+function logYesterday(carrotStickObj){
 	var yesterday = moment().subtract(1, 'days');
-	logDay(yesterday);
+	logDay(yesterday, carrotStickObj);
 }
 
-function logDay(momentObj) {
+function logDay(momentObj, carrotStickObj) {
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
 	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
@@ -326,7 +308,7 @@ function logDay(momentObj) {
 		response.dateString = dateString;
 		response.dateDate = momentObj._d;
 		//checkForDupes(response);
-		APIparse(response);
+		APIparse(response, carrotStickObj);
 		//console.log(productivityObj);
 	})
 	.catch(error => {
@@ -334,13 +316,13 @@ function logDay(momentObj) {
 	});}
 
 
-	function APIparse(response) {
+	function APIparse(response, carrotStickObj) {
 		var {rows:row} = response.data; //no variables that end in 's'
 		var dateString = response.dateString;
 		//	console.log(row);
 		var day = {
 			'date': response.dateString,
-			'dateObj': response.dateDate,
+			//'dateObj': response.dateDate,
 			hourArray:[]
 		};
 		day.hourArray.length = 24;
@@ -366,26 +348,36 @@ function logDay(momentObj) {
 			}
 
 			if (!day.hourArray[hourNumb]) {
-				//console.log(day.hourArray[hourNumb-1]);
+				console.log(day.hourArray[hourNumb-1]);
 				day.hourArray[hourNumb] = {
-					hourStarts: hourNumb,
+					hourStart: hourNumb,
 					productivity:{},
 					carrotStick: 0}
 			console.log(day.hourArray[hourNumb - 1])
 			}
 			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
-			day.hourArray[hourNumb].carrotStick += row[i][1] * userCarrotStick[hourNumb].byProd[prodLevel] * modifier;
+			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 
 		};
-		//console.log(day);
+		console.log(day);
 		//carrotStick(day);
 		//console.log(day.hour);
 		//console.log('Parsed:');
 		//console.log(JSON.stringify(day));
-		//newDay(day);
+		newDay(day);
 	}
 
-function carrotStick(dayRecord) {
+
+//console.log(userCarrotStick[11]);
+//console.log()
+//APIparse(testResponse);
+//logYesterday(userCarrotStick);
+//getTime();
+searchAll();
+
+
+
+/*function carrotStick(dayRecord) {
 	for (var i = 0; i < dayRecord.hourArray.length - 1; i++) {
 		if (dayRecord.hourArray[i]) {//dayRecord may be empty for this hour
 			var loopableHour = Object.entries(dayRecord.hourArray[i].productivity);
@@ -417,17 +409,7 @@ function carrotStick(dayRecord) {
 	//dayProcessed.totalScore = dayProcessed.dayStick + dayProcessed.dayCarrot;
 	//console.log(dayProcessed)
 }
-
-//console.log(userCarrotStick[11]);
-//console.log()
-//APIparse(testResponse);
-logYesterday();
-//getTime();
-//searchAll();
-
-
-
-
+*/
 /*	function checkForDupes(response) {
 		var {rows:row} = response.data;
 		var units = {};

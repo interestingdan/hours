@@ -10,14 +10,16 @@ const prodHour = new Schema ({
 })
 
 const hourSchema = new Schema ({
-	hourStarts : Number,
+	hourStart : Number,
 	productivity : prodHour,
+	carrotStick: Number
 	//categories :
 })
 
 const daySchema = new Schema ({
-	hours : [hourSchema],
-	date : {type: String, unique: true}
+	hourArray : [hourSchema],
+	date : {type: String, unique: true},
+	//dateObj :
 	})
 
 	module.exports = mongoose.model('Day', daySchema)

@@ -62,179 +62,446 @@ async function flush() {
 const modifier = 0.0086;
 
 const userCarrotStick = [
-	{hourStarts: 0, byProd:{
-		VUnp: -8,
-		Unpr: -6,
-		Neut: 0,
-		Prod: -6,
-		VPro: -6}
+	{	hourStarts: 0,
+		byProd:{
+			VUnp: -8,
+			Unpr: -6,
+			Neut: 0,
+			Prod: -6,
+			VPro: -6
+		},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+
 	},
-	{hourStarts: 0, byProd:{
+	{hourStarts: 1, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 2, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 3, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 4, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 5, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 6, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 7, byProd:{
 		VUnp: -6,
 		Unpr: -6,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 8, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 9, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 10, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 11, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 12, byProd:{
 		VUnp: 0,
 		Unpr: 0,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 13, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 14, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 15, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 16, byProd:{
 		VUnp: -6,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 6,
-		VPro: 8}
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 17, byProd:{
 		VUnp: -4,
 		Unpr: -2,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 18, byProd:{
 		VUnp: -4,
 		Unpr: -2,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 19, byProd:{
 		VUnp: 0,
 		Unpr: 0,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 20, byProd:{
 		VUnp: -8,
 		Unpr: 0,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 21, byProd:{
 		VUnp: -8,
 		Unpr: -4,
 		Neut: 0,
 		Prod: 0,
-		VPro: 0}
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 22, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	},
 	{hourStarts: 23, byProd:{
 		VUnp: -8,
 		Unpr: -6,
 		Neut: 0,
 		Prod: -6,
-		VPro: -6}
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
 	}
 ]; // replace this with object in user instance
 
 const testResponse = {"date": "2020-01-01",
 "data":
-{rows: [
+	{rows: [
 	[ '2020-03-11T00:00:00', 59, 1, 1 ],
 	[ '2020-03-11T00:00:00', 49, 1, 0 ],
 	[ '2020-03-11T00:00:00', 15, 1, -2 ],
@@ -280,7 +547,7 @@ const testResponse = {"date": "2020-01-01",
 	[ '2020-03-11T17:00:00', 13, 1, 1 ],
 	[ '2020-03-11T17:00:00', 3, 1, -1 ],
 ]
-}
+	}
 }
 
 function parseTime(dateObj){
@@ -367,13 +634,91 @@ function logDay(momentObj, carrotStickObj) {
 		newDay(day);
 	}
 
+	function logYesterdayCategory(carrotStickObj){
+		var yesterday = moment().subtract(1, 'days');
+		logDayCategory(yesterday, carrotStickObj);
+	}
+
+	function logDayCategory(momentObj, carrotStickObj) {
+		var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
+		var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`
+		axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=category`)
+		.then(response => {
+			//console.log(response.data);// instead of logging, process the data and display it
+			response.dateString = dateString;
+			//response.dateDate = momentObj._d;
+			APIparseCategory(response, carrotStickObj);
+			//console.log(productivityObj);
+		})
+		.catch(error => {
+		console.log(error);
+		});}
+
+
+		function APIparseCategory(response, carrotStickObj) {
+			var {rows:row} = response.data; //no variables that end in 's'
+			var dateString = response.dateString;
+			//	console.log(row);
+			var day = {
+				'date': response.dateString,
+				//'dateObj': response.dateDate,
+				hourArray:[]
+			};
+			day.hourArray.length = 24;
+			for (var i = 0; i < row.length; i++) {
+				var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
+				//console.log(hourNumb);
+				switch(row[i][3]) {  //pick the productivity level from the row an
+					case -2:
+					var prodLevel = "VUnp";
+					break;
+					case -1:
+					var prodLevel = "Unpr";
+					break;
+					case 0:
+					var prodLevel = "Neut";
+					break;
+					case 1:
+					var prodLevel = "Prod";
+					break;
+					case 2:
+					var prodLevel = "VPro";
+					break;
+				}
+				var rowCategory = row[i][3];
+
+				if (!day.hourArray[hourNumb]) {
+					console.log(day.hourArray[hourNumb-1]);
+					day.hourArray[hourNumb] = {
+						hourStart: hourNumb,
+						productivity:{},
+						category:{},
+						carrotStick: 0}
+				}
+
+				if (carrotStickObj[hourNumb].byCat[rowCategory]) {
+					//console.log('category identified' + Category);
+					day.hourArray[hourNumb]["category"][rowCategory] = row[i][1];
+					day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byCat[rowCategory] * modifier;
+				}
+				/*day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
+				day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;*/
+
+			};
+			//console.log(day);
+			//carrotStick(day);
+			//console.log(day.hour);
+			//console.log('Parsed:');
+			//console.log(JSON.stringify(day));
+			//newDay(day);
+		}
 
 //console.log(userCarrotStick[11]);
 //console.log()
 //APIparse(testResponse);
-//logYesterday(userCarrotStick);
+logYesterdayCategory(userCarrotStick);
 //getTime();
-searchAll();
+//searchAll();
 
 
 

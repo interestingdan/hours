@@ -9,11 +9,23 @@ const prodHour = new Schema ({
 	"Very Productive" : Number,
 })
 
+const catHour = new Schema ({
+	"General Social Networking" : Number,
+	"Games" : Number,
+	"Instant Message" : Number,
+	"Writing" : Number,
+	"Video" : Number,
+	"Photos" : Number,
+	"Project Management" : Number,
+	"General Software Development" : Number,
+	"Editing & IDEs" : Number
+})
+
 const hourSchema = new Schema ({
 	hourStart : Number,
 	productivity : prodHour,
-	carrotStick: Number
-	//categories :
+	carrotStick: Number,
+	category : catHour
 })
 
 const daySchema = new Schema ({

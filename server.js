@@ -42,6 +42,12 @@ const newDay = function(record) {
 	});
 }
 
+async function newUser(record) {
+	var thisUser = new User(record);
+	console.log(record);
+	await thisUser.save();
+}
+
 const searchAll = function(done) {
 	Day.find(null,function(err, data){
 		if (err) console.log(err);
@@ -623,9 +629,8 @@ function APIparse(response, carrotStickObj) {
 					carrotStick: 0}
 					console.log(day.hourArray[hourNumb - 1])
 				}
-				day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
+				day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1];
 				day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
-
 			};
 			console.log(day);
 			//carrotStick(day);
@@ -643,7 +648,9 @@ function logYesterdayCategory(carrotStickObj){
 
 function logDayCategory(momentObj, carrotStickObj) {
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
+
 	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`
+
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=category`)
 		.then(response => {
 			//console.log(response.data);// instead of logging, process the data and display it
@@ -717,7 +724,7 @@ function APIparseCategory(response, carrotStickObj) {
 //console.log(userCarrotStick[11]);
 //console.log()
 //APIparse(testResponse);
-logYesterdayCategory(userCarrotStick);
+//logYesterdayCategory(userCarrotStick);
 //getTime();
 //searchAll();
 

@@ -8,7 +8,8 @@ const userSchema = new Schema ({
 		unique : true},
 	days : [{
 		type: Schema.Types.ObjectId,
-		ref: 'Day'}]
+		ref: 'Day'}],
+	score : Number,
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -49,7 +49,7 @@ async function newUser(record) {
 }
 
 const searchAll = function(done) {
-	Day.find(null,function(err, data){
+	Day.find(null, function(err, data){
 		if (err) console.log(err);
 			console.log(data);
 		});
@@ -59,7 +59,7 @@ async function flush() {
 	await Day.deleteMany({});
 }
 
-//searchAll();
+//searchAll({});
 
 
 /*app.get('/rtime', function(req, res){

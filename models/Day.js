@@ -31,6 +31,7 @@ const hourSchema = new Schema ({
 const daySchema = new Schema ({
 	hourArray : [hourSchema],
 	date : {type: String, unique: true},
+	dayScore : Number,
 	//dateObj :
 	})
 

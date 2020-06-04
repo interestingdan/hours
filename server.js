@@ -34,12 +34,50 @@ db.once('open', function() {
 	}
 );
 
-const newDay = function(record) {
+
+
+/*const newDay = function(record) {
 	var thisDay = new Day(record);
 	console.log(record);
 	thisDay.save(function(err, data) {
 		if (err) console.log(err);
 	});
+}*/
+
+
+async function newDay(record) {
+	var thisDay = new Day(record);
+	await thisDay.save();
+}
+
+async function updateScore(userNameArg, scoreArg){
+	const user = await User.findOne({"userName" : userNameArg})
+	user.score += scoreArg;
+	const saved = await user.save()
+	console.log(saved)
+}
+
+async function resetScore(userNameArg){
+	const user = await User.findOne({"userName" : userNameArg})
+		.catch(error => { console.error(error) })
+	if (!user) {
+		console.log("User Not Found")
+	} else {
+	user.score = 0;
+	const saved = await user.save()
+	.catch(error => { console.error(error) })
+	console.log(saved)
+	}
+}
+
+async function showScore(userNameArg){
+	const user = await User.findOne({"userName" : userNameArg})
+		.catch(error => { console.error(error) })
+	if (!user) {
+		console.log("User Not Found")
+	} else {
+	console.log("Your score is: " + user.score);
+	}
 }
 
 async function newUser(record) {
@@ -559,7 +597,7 @@ const testResponse = {"date": "2020-01-01",
 
 function parseTime(dateObj){
 	//var date = dateObj.subtract(1, 'days');
-	var date =dateObj
+	var date =dateObj;
 	var offset = dateObj.utcOffset();
 	dateString = dateObj.add(offset, 'minutes')
 		.toISOString()
@@ -567,21 +605,20 @@ function parseTime(dateObj){
 	return dateString;
 }
 
-
 function logYesterday(carrotStickObj){
 	var yesterday = moment().subtract(1, 'days');
-	logDay(yesterday, carrotStickObj);
+	logDay(yesterday, carrotStickObj, "InterDan");
 }
 
-function logDay(momentObj, carrotStickObj) {
+function logDay(momentObj, carrotStickObj, userName) {
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
 	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
-			//console.log(response.data);// instead of logging, process the data and display it
 			response.dateString = dateString;
-			response.dateDate = momentObj._d;
+			//response.dateDate = momentObj._d;
 			//checkForDupes(response);
+			response.userName = userName;
 			APIparse(response, carrotStickObj);
 			//console.log(productivityObj);
 		})
@@ -593,6 +630,7 @@ function logDay(momentObj, carrotStickObj) {
 function APIparse(response, carrotStickObj) {
 	var {rows:row} = response.data; //no variables that end in 's'
 	var dateString = response.dateString;
+	var userName =response.userName;
 	//	console.log(row);
 	var day = {
 		'date': response.dateString,
@@ -621,7 +659,6 @@ function APIparse(response, carrotStickObj) {
 			var prodLevel = "VPro";
 			break;
 		}
-
 		if (!day.hourArray[hourNumb]) {
 			console.log(day.hourArray[hourNumb-1]);
 			day.hourArray[hourNumb] = {
@@ -632,19 +669,22 @@ function APIparse(response, carrotStickObj) {
 			}
 			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1];
 			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
-			dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
-
+			day.dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
+
 		console.log(day);
-		//carrotStick(day);
-		//console.log(day.hour);
-		//console.log('Parsed:');
+		day.dayScore = Math.round(day.dayScore);
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-}
+		updateScore(userName, day.dayScore)
+			.catch(error => { console.error(error) })
+	}
 
+//logYesterday(userCarrotStick);
+//resetScore("InterDan");
+showScore("InterDan");
 
-function logYesterdayCategory(carrotStickObj){
+/*function logYesterdayCategory(carrotStickObj){
 	var yesterday = moment().subtract(1, 'days');
 	logDayCategory(yesterday, carrotStickObj);
 }
@@ -714,7 +754,7 @@ function APIparseCategory(response, carrotStickObj) {
 				day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byCat[rowCategory] * modifier;
 			}
 			/*day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
-			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;*/
+			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
 		//console.log(day);
 		//carrotStick(day);
@@ -722,13 +762,11 @@ function APIparseCategory(response, carrotStickObj) {
 		//console.log('Parsed:');
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-}
+}*/
 
-//console.log(userCarrotStick[11]);
-//console.log()
+
 //APIparse(testResponse);
 //logYesterdayCategory(userCarrotStick);
-//getTime();
 //searchAll();
 
 

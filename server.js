@@ -54,6 +54,8 @@ async function updateScore(userNameArg, scoreArg){
 	const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;
 	const saved = await user.save()
+	const newScoreUser = await User.findOne({"userName" : userNameArg})
+	console.log("Your score is now " + newScoreUser.score)
 	console.log(saved)
 }
 
@@ -682,7 +684,7 @@ function APIparse(response, carrotStickObj) {
 
 //logYesterday(userCarrotStick);
 //resetScore("InterDan");
-showScore("InterDan");
+//showScore("InterDan");
 
 /*function logYesterdayCategory(carrotStickObj){
 	var yesterday = moment().subtract(1, 'days');

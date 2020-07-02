@@ -50,18 +50,24 @@ async function newDay(record) {
 	await thisDay.save();
 }
 
+function printScore(dayRecord) {
+	var target = document.getElementById('target');
+	var resultScore = dayRecord.dayScore;
+	var resultsEl = `<div>Today's score is ${resultScore}</div>`
+	target.appendChild()
+};
+
 async function updateScore(userNameArg, scoreArg){
 	const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;
 	const saved = await user.save()
 	const newScoreUser = await User.findOne({"userName" : userNameArg})
 	console.log("Your score is now " + newScoreUser.score)
-	console.log(saved)
-}
+};
 
 async function resetScore(userNameArg){
 	const user = await User.findOne({"userName" : userNameArg})
-		.catch(error => { console.error(error) })
+		.catch(error => { console.error(error) });
 	if (!user) {
 		console.log("User Not Found")
 	} else {
@@ -70,7 +76,7 @@ async function resetScore(userNameArg){
 	.catch(error => { console.error(error) })
 	console.log(saved)
 	}
-}
+};
 
 async function showScore(userNameArg){
 	const user = await User.findOne({"userName" : userNameArg})
@@ -80,24 +86,24 @@ async function showScore(userNameArg){
 	} else {
 	console.log("Your score is: " + user.score);
 	}
-}
+};
 
 async function newUser(record) {
 	var thisUser = new User(record);
 	console.log(record);
 	await thisUser.save();
-}
+};
 
 const searchAll = function(done) {
 	Day.find(null, function(err, data){
 		if (err) console.log(err);
 			console.log(data);
 		});
-	}
+	};
 
 async function flush() {
 	await Day.deleteMany({});
-}
+};
 
 //searchAll({});
 
@@ -419,8 +425,8 @@ const userCarrotStick = [
 		}
 	},
 	{hourStarts: 17, byProd:{
-		VUnp: -4,
-		Unpr: -2,
+		VUnp: 0,
+		Unpr: 0,
 		Neut: 0,
 		Prod: 0,
 		VPro: 0},
@@ -437,8 +443,8 @@ const userCarrotStick = [
 		}
 	},
 	{hourStarts: 18, byProd:{
-		VUnp: -4,
-		Unpr: -2,
+		VUnp: 0,
+		Unpr: 0,
 		Neut: 0,
 		Prod: 0,
 		VPro: 0},
@@ -476,8 +482,8 @@ const userCarrotStick = [
 		VUnp: -8,
 		Unpr: 0,
 		Neut: 0,
-		Prod: 0,
-		VPro: 0},
+		Prod: 6,
+		VPro: 8},
 		byCat: {
 			"General Social Networking" : -8,
 			"Games" : -8,
@@ -545,6 +551,444 @@ const userCarrotStick = [
 		}
 	}
 ]; // replace this with object in user instance
+
+const weekendUserCarrotStick = [
+	{	hourStarts: 0,
+		byProd:{
+			VUnp: -8,
+			Unpr: -6,
+			Neut: 0,
+			Prod: -6,
+			VPro: -6
+		},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+
+	},
+	{hourStarts: 1, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 2, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 3, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 4, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 5, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 6, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 7, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 8, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 9, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 10, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 11, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 12, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 13, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 14, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 15, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 16, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 17, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 18, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 19, byProd:{
+		VUnp: 0,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 20, byProd:{
+		VUnp: -8,
+		Unpr: 0,
+		Neut: 0,
+		Prod: 6,
+		VPro: 8},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 21, byProd:{
+		VUnp: -8,
+		Unpr: -4,
+		Neut: 0,
+		Prod: 0,
+		VPro: 0},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 22, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	},
+	{hourStarts: 23, byProd:{
+		VUnp: -8,
+		Unpr: -6,
+		Neut: 0,
+		Prod: -6,
+		VPro: -6},
+		byCat: {
+			"General Social Networking" : -8,
+			"Games" : -8,
+			"Instant Message" : -6,
+			"Writing" : -6,
+			"Video" : -8,
+			"Photos" : -8,
+			"Project Management" : -6,
+			"General Software Development" : -6,
+			"Editing & IDEs" : -6
+		}
+	}
+];
 
 const testResponse = {"date": "2020-01-01",
 "data":
@@ -662,12 +1106,11 @@ function APIparse(response, carrotStickObj) {
 			break;
 		}
 		if (!day.hourArray[hourNumb]) {
-			console.log(day.hourArray[hourNumb-1]);
+			//console.log(day.hourArray[hourNumb-1]);
 			day.hourArray[hourNumb] = {
 				hourStart: hourNumb,
 				productivity:{},
 				carrotStick: 0}
-				console.log(day.hourArray[hourNumb - 1])
 			}
 			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1];
 			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
@@ -678,11 +1121,12 @@ function APIparse(response, carrotStickObj) {
 		day.dayScore = Math.round(day.dayScore);
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-		updateScore(userName, day.dayScore)
-			.catch(error => { console.error(error) })
+		updateScore(userName, day.dayScore).catch(error => { console.error(error) })
+		//printScore(day);
 	}
 
-//logYesterday(userCarrotStick);
+logYesterday(userCarrotStick);
+//logYesterday(weekendUserCarrotStick);
 //resetScore("InterDan");
 //showScore("InterDan");
 

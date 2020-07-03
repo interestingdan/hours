@@ -10,12 +10,19 @@ const Day = require("./models/Day.js");
 const User = require("./models/User.js");
 const moment = require('moment');
 moment().format();
+const pug = require('pug');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
-app.get('/',function(req, res) {res.sendFile(__dirname + '/views/index.html')});
+app.set('view engine', 'pug')
+
+app.route('/').get((req, res) => {
+    res.render(process.cwd() + '/views/pug/index.pug');
+  });
+
+
 
 app.use(express.static(__dirname+ '/public/'));
 

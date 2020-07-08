@@ -19,10 +19,8 @@ app.use(bodyParser.json());
 app.set('view engine', 'pug')
 
 app.route('/').get((req, res) => {
-    res.render(process.cwd() + '/views/pug/index.pug');
-  });
-
-
+	res.render(process.cwd() + '/views/pug/index.pug');
+});
 
 app.use(express.static(__dirname+ '/public/'));
 
@@ -31,8 +29,8 @@ app.listen(port, () => console.log(`App listening on port ${port}!`));
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useCreateIndex: true});
-var db = mongoose.connection;
+	useCreateIndex: true}).catch(error => { console.error(error) });
+	var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 
@@ -80,7 +78,7 @@ async function resetScore(userNameArg){
 	} else {
 	user.score = 0;
 	const saved = await user.save()
-	.catch(error => { console.error(error) })
+	.catch(error => { console.error(error) });
 	console.log(saved)
 	}
 };
@@ -114,10 +112,15 @@ async function flush() {
 
 //searchAll({});
 
-
 /*app.get('/rtime', function(req, res){
   rTimeTest();
 });*/
+
+function hourScore(record) {
+	for (i = 0; i < 24; i++) {
+		if (record.hourArray[i] && record.hourArray[i].carrotStick) {console.log(record.hourArray[i].hourStart + " : " +record.hourArray[i].carrotStick);}
+	}
+}
 
 const modifier = 0.0086;
 
@@ -1058,7 +1061,7 @@ function parseTime(dateObj){
 	return dateString;
 }
 
-function logYesterday(carrotStickObj){
+function logYesterday(carrotStickObj) {
 	var yesterday = moment().subtract(1, 'days');
 	logDay(yesterday, carrotStickObj, "InterDan");
 }
@@ -1113,7 +1116,6 @@ function APIparse(response, carrotStickObj) {
 			break;
 		}
 		if (!day.hourArray[hourNumb]) {
-			//console.log(day.hourArray[hourNumb-1]);
 			day.hourArray[hourNumb] = {
 				hourStart: hourNumb,
 				productivity:{},
@@ -1123,14 +1125,16 @@ function APIparse(response, carrotStickObj) {
 			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 			day.dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
-
-		console.log(day);
+		//console.log(day);
+		hourScore(day);
 		day.dayScore = Math.round(day.dayScore);
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-		updateScore(userName, day.dayScore).catch(error => { console.error(error) })
+		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 		//printScore(day);
 	}
+
+
 
 logYesterday(userCarrotStick);
 //logYesterday(weekendUserCarrotStick);

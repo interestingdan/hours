@@ -116,9 +116,14 @@ async function flush() {
   rTimeTest();
 });*/
 
-function hourScore(record) {
-	for (i = 0; i < 24; i++) {
-		if (record.hourArray[i] && record.hourArray[i].carrotStick) {console.log(record.hourArray[i].hourStart + " : " +record.hourArray[i].carrotStick);}
+
+
+function hourScore(hourArray){
+	var x;
+	for (x of hourArray){
+		if(x){
+			console.log(x.hourStart + " : " + x.carrotStick);
+		}
 	}
 }
 
@@ -1126,11 +1131,12 @@ function APIparse(response, carrotStickObj) {
 			day.dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
 		//console.log(day);
-		hourScore(day);
+		hourScore(day.hourArray);
+		console.log(day.dayScore);
 		day.dayScore = Math.round(day.dayScore);
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
+		updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 		//printScore(day);
 	}
 

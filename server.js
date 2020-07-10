@@ -127,6 +127,12 @@ function hourScore(hourArray){
 	}
 }
 
+function weekday(momentArg){
+	console.log(momentArg.isoWeekday());
+}
+
+weekday(moment());
+
 const modifier = 0.0086;
 
 const userCarrotStick = [
@@ -1136,13 +1142,13 @@ function APIparse(response, carrotStickObj) {
 		day.dayScore = Math.round(day.dayScore);
 		//console.log(JSON.stringify(day));
 		//newDay(day);
-		updateScore(userName, day.dayScore).catch(error => { console.error(error) });
+		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 		//printScore(day);
 	}
 
 
-
-logYesterday(userCarrotStick);
+	//printScore(day);
+//logYesterday(userCarrotStick);
 //logYesterday(weekendUserCarrotStick);
 //resetScore("InterDan");
 //showScore("InterDan");

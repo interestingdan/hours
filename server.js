@@ -127,15 +127,12 @@ function hourScore(hourArray){
 	}
 }
 
-function weekday(momentArg){
-	console.log(momentArg.isoWeekday());
-}
-
-weekday(moment());
 
 const modifier = 0.0086;
 
-const userCarrotStick = [
+
+
+const workday = [
 	{	hourStarts: 0,
 		byProd:{
 			VUnp: -8,
@@ -570,10 +567,9 @@ const userCarrotStick = [
 			"General Software Development" : -6,
 			"Editing & IDEs" : -6
 		}
-	}
-]; // replace this with object in user instance
+	}]; // replace this with object in user instance
 
-const weekendUserCarrotStick = [
+const weekend = [
 	{	hourStarts: 0,
 		byProd:{
 			VUnp: -8,
@@ -1011,6 +1007,16 @@ const weekendUserCarrotStick = [
 	}
 ];
 
+const weekdayPicker = {
+	1 : workday,
+	2 : workday,
+	3 : workday,
+	4 : workday,
+	5 : workday,
+	6 : weekend,
+	7 : weekend
+}
+
 const testResponse = {"date": "2020-01-01",
 "data":
 	{rows: [
@@ -1063,21 +1069,26 @@ const testResponse = {"date": "2020-01-01",
 }
 
 function parseTime(dateObj){
-	//var date = dateObj.subtract(1, 'days');
-	var date =dateObj;
+	var date = dateObj;
 	var offset = dateObj.utcOffset();
-	dateString = dateObj.add(offset, 'minutes')
+	var dateString = dateObj.add(offset, 'minutes')
 		.toISOString()
 		.slice(0, 10);
 	return dateString;
 }
 
-function logYesterday(carrotStickObj) {
-	var yesterday = moment().subtract(1, 'days');
-	logDay(yesterday, carrotStickObj, "InterDan");
+function classifyDay(momentArg){
+	var dayNumber = momentArg.isoWeekday();
+	return weekdayPicker[dayNumber];
 }
 
-function logDay(momentObj, carrotStickObj, userName) {
+function logYesterday(userName) {
+	var yesterday = moment().subtract(1, 'days');
+	logDay(yesterday, userName);
+}
+
+function logDay(momentObj, userName) {
+	var carrotStickObj = classifyDay(momentObj);
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
 	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
 	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
@@ -1136,20 +1147,16 @@ function APIparse(response, carrotStickObj) {
 			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 			day.dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
-		//console.log(day);
 		hourScore(day.hourArray);
 		console.log(day.dayScore);
 		day.dayScore = Math.round(day.dayScore);
-		//console.log(JSON.stringify(day));
 		//newDay(day);
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 		//printScore(day);
 	}
 
 
-	//printScore(day);
-//logYesterday(userCarrotStick);
-//logYesterday(weekendUserCarrotStick);
+logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");
 

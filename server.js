@@ -20,17 +20,21 @@ app.set('view engine', 'pug')
 
 app.route('/').get((req, res) => {
 	res.render(process.cwd() + '/views/pug/index.pug');
-});
+});// might wanna replace this with:
+//app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static(__dirname+ '/public/'));
+app.use(express.static(path.join(__dirname '/public/'))); // do I want this if I'm using pug etc?
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
+
+//talk to mongoDB
 
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useCreateIndex: true}).catch(error => { console.error(error) });
-	var db = mongoose.connection;
+
+var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 

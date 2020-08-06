@@ -17,13 +17,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'views'));
 
-app.route('/').get((req, res) => {
+/*app.route('/').get((req, res) => {
 	res.render(process.cwd() + '/views/pug/index.pug');
-});// might wanna replace this with:
-//app.set('views', path.join(__dirname, 'views'));
+});*
 
-app.use(express.static(path.join(__dirname '/public/'))); // do I want this if I'm using pug etc?
+//app.use(express.static(path.join(__dirname, '/public/'))); // do I want this if I'm using pug etc?
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 

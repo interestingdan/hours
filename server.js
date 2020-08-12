@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const axios = require('axios');
 const bodyParser = require("body-parser");
+const path = require('path');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Day = require("./models/Day.js");
@@ -19,9 +20,9 @@ app.use(bodyParser.json());
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'));
 
-/*app.route('/').get((req, res) => {
-	res.render(process.cwd() + '/views/pug/index.pug');
-});*
+app.route('/').get((req, res) => {
+	res.render(process.cwd() + '/views/pug/index.pug', {text: 'jello'});
+});
 
 //app.use(express.static(path.join(__dirname, '/public/'))); // do I want this if I'm using pug etc?
 
@@ -36,7 +37,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', function() {
 		console.log("Connection Successful!");
@@ -52,6 +53,7 @@ db.once('open', function() {
 		if (err) console.log(err);
 	});
 }*/
+
 
 
 async function newDay(record) {
@@ -116,10 +118,6 @@ async function flush() {
 
 //searchAll({});
 
-/*app.get('/rtime', function(req, res){
-  rTimeTest();
-});*/
-
 
 
 function hourScore(hourArray){
@@ -132,9 +130,8 @@ function hourScore(hourArray){
 }
 
 
+
 const modifier = 0.0086;
-
-
 
 const workday = [
 	{	hourStarts: 0,
@@ -570,8 +567,7 @@ const workday = [
 			"Project Management" : -6,
 			"General Software Development" : -6,
 			"Editing & IDEs" : -6
-		}
-	}]; // replace this with object in user instance
+		}}]; // replace this with object in user instance
 
 const weekend = [
 	{	hourStarts: 0,
@@ -1144,7 +1140,7 @@ function APIparse(response, carrotStickObj) {
 		if (!day.hourArray[hourNumb]) {
 			day.hourArray[hourNumb] = {
 				hourStart: hourNumb,
-				productivity:{},
+				productivity: {},
 				carrotStick: 0}
 			}
 			day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1];
@@ -1154,154 +1150,13 @@ function APIparse(response, carrotStickObj) {
 		hourScore(day.hourArray);
 		console.log(day.dayScore);
 		day.dayScore = Math.round(day.dayScore);
-		//newDay(day);
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
-		//printScore(day);
 	}
-
 
 logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");
 
-/*function logYesterdayCategory(carrotStickObj){
-	var yesterday = moment().subtract(1, 'days');
-	logDayCategory(yesterday, carrotStickObj);
-}
 
-function logDayCategory(momentObj, carrotStickObj) {
-	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
-
-	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`
-
-	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=category`)
-		.then(response => {
-			//console.log(response.data);// instead of logging, process the data and display it
-			response.dateString = dateString;
-			//response.dateDate = momentObj._d;
-			APIparseCategory(response, carrotStickObj);
-			//console.log(productivityObj);
-		})
-		.catch(error => {
-			console.log(error);
-		});
-}
-
-function APIparseCategory(response, carrotStickObj) {
-	var {rows:row} = response.data; //no variables that end in 's'
-	var dateString = response.dateString;
-	//	console.log(row);
-	var day = {
-		'date': response.dateString,
-		//'dateObj': response.dateDate,
-		hourArray:[]
-	};
-	day.hourArray.length = 24;
-	for (var i = 0; i < row.length; i++) {
-		var hourNumb = parseInt(row[i][0].slice(11, 13), 10); //pick the hour out of the date string and turn it into a number
-		//console.log(hourNumb);
-		switch(row[i][3]) {  //pick the productivity level from the row an
-			case -2:
-			var prodLevel = "VUnp";
-			break;
-			case -1:
-			var prodLevel = "Unpr";
-			break;
-			case 0:
-			var prodLevel = "Neut";
-			break;
-			case 1:
-			var prodLevel = "Prod";
-			break;
-			case 2:
-			var prodLevel = "VPro";
-			break;
-		}
-		var rowCategory = row[i][3];
-
-		if (!day.hourArray[hourNumb]) {
-			console.log(day.hourArray[hourNumb-1]);
-			day.hourArray[hourNumb] = {
-				hourStart: hourNumb,
-				productivity:{},
-				category:{},
-				carrotStick: 0}
-			}
-
-			if (carrotStickObj[hourNumb].byCat[rowCategory]) {
-				//console.log('category identified' + Category);
-				day.hourArray[hourNumb]["category"][rowCategory] = row[i][1];
-				day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byCat[rowCategory] * modifier;
-			}
-			/*day.hourArray[hourNumb]["productivity"][prodLevel] = row[i][1]
-			day.hourArray[hourNumb].carrotStick += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
-		};
-		//console.log(day);
-		//carrotStick(day);
-		//console.log(day.hour);
-		//console.log('Parsed:');
-		//console.log(JSON.stringify(day));
-		//newDay(day);
-}*/
-
-
-//APIparse(testResponse);
-//logYesterdayCategory(userCarrotStick);
-//searchAll();
-
-
-
-/*function carrotStick(dayRecord) {
-for (var i = 0; i < dayRecord.hourArray.length - 1; i++) {
-if (dayRecord.hourArray[i]) {//dayRecord may be empty for this hour
-var loopableHour = Object.entries(dayRecord.hourArray[i].productivity);
-//console.log(loopableHour);
-for (var j = 0; j < loopableHour.length; j++) {
-var hourRowProdLevel = loopableHour[j][0];//returns an array, ["Prodlevel", Number]
-//console.log(hourRowProdLevel);
-var hourRowTimeAmount = loopableHour[j][1];
-//console.log(hourRowTimeAmount);
-if (userCarrotStick[i].byProd[hourRowProdLevel] > 0) {
-if (dayRecord.hourArray[i].carrot) {
-dayRecord.hourArray[i].carrot += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
-} else {
-dayRecord.hourArray[i].carrot = hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
-}
-//console.log(dayRecord.hourArray[i]);
-} else if (userCarrotStick[i].byProd[hourRowProdLevel] < 0) {
-if (dayRecord.hourArray[i].stick) {
-dayRecord.hourArray[i].stick += hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
-} else {
-dayRecord.hourArray[i].stick = hourRowTimeAmount * userCarrotStick[i].byProd[hourRowProdLevel] * modifier;
-}
-}
-}
-}
-console.log(dayRecord.hourArray[i]);
-
-}
-//dayProcessed.totalScore = dayProcessed.dayStick + dayProcessed.dayCarrot;
-//console.log(dayProcessed)
-}
-*/
-/*	function checkForDupes(response) {
-var {rows:row} = response.data;
-var units = {};
-for (var i = 0; i < row.length; i++) {
-var dayHour = row[i][0];
-var prodLevel = row[i][3];
-if (!units[dayHour]) {
-units[dayHour] = {};
-}
-if (units[dayHour][prodLevel]) {
-break;
-console.log('dupe detected')
-} else {
-units[dayHour][prodLevel] = [row[i][1]]
-}
-console.log(units)
-}
-}
-*/
 
 module.exports = app;

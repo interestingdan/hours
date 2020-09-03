@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/interestingdan/node-boilerplate#readme",
   "dependencies": {
+    "async": "^3.2.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
@@ -24,6 +25,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "mongoose": "^5.9.2",
+    "morgan": "^1.10.0",
     "node": "^13.8.0",
     "pug": "^3.0.0"
   }

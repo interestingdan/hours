@@ -8,23 +8,30 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Day = require("./models/Day.js");
-const User = require("./models/User.js");
+//const User = require("./models/User.js");
 const moment = require('moment');
 moment().format();
 const pug = require('pug');
+const indexRouter = require('./routes/index');
+const logger = require('morgan');
+
 
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
+app.use(logger('dev'));
+
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'));
 
-app.route('/').get((req, res) => {
+/*app.route('/').get((req, res) => {
 	res.render(process.cwd() + '/views/pug/index.pug', {text: 'jello'});
-});
+});*/
 
-//app.use(express.static(path.join(__dirname, '/public/'))); // do I want this if I'm using pug etc?
+app.use('/', indexRouter);
+
+app.use(express.static(path.join(__dirname, '/public/')));
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 
@@ -124,7 +131,7 @@ function hourScore(hourArray){
 	var x;
 	for (x of hourArray){
 		if(x){
-			console.log(x.hourStart + " : " + x.carrotStick);
+			console.log(x.hourStart + " : " + Math.round(x.carrotStick));
 		}
 	}
 }
@@ -1148,12 +1155,12 @@ function APIparse(response, carrotStickObj) {
 			day.dayScore += row[i][1] * carrotStickObj[hourNumb].byProd[prodLevel] * modifier;
 		};
 		hourScore(day.hourArray);
-		console.log(day.dayScore);
 		day.dayScore = Math.round(day.dayScore);
+		console.log(day.dayScore);
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 
-logYesterday("InterDan");
+//logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");
 

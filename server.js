@@ -68,13 +68,6 @@ async function newDay(record) {
 	await thisDay.save();
 }
 
-function printScore(dayRecord) {
-	var target = document.getElementById('target');
-	var resultScore = dayRecord.dayScore;
-	var resultsEl = `<div>Today's score is ${resultScore}</div>`
-	target.appendChild()
-};
-
 async function updateScore(userNameArg, scoreArg){
 	const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;

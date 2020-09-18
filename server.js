@@ -8,11 +8,16 @@ const path = require('path');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Day = require("./models/Day.js");
-//const User = require("./models/User.js");
+const User = require("./models/User.js");
 const moment = require('moment');
 moment().format();
 const pug = require('pug');
-const indexRouter = require('./routes/index');
+//const indexRouter = require('./routes/index');
+const readline = require("readline");
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 const logger = require('morgan');
 
 
@@ -29,7 +34,7 @@ app.set('views', path.join(__dirname, 'views'));
 	res.render(process.cwd() + '/views/pug/index.pug', {text: 'jello'});
 });*/
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 
 app.use(express.static(path.join(__dirname, '/public/')));
 
@@ -1150,10 +1155,16 @@ function APIparse(response, carrotStickObj) {
 		hourScore(day.hourArray);
 		day.dayScore = Math.round(day.dayScore);
 		console.log(day.dayScore);
+		rl.question("Enter 'Y' to commit, any other input to end ", function(input) {
+			if (input === "Y" || input === "y") {
+				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
+			}
+			rl.close();
+		});
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 
-//logYesterday("InterDan");
+logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");
 

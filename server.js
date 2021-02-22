@@ -1155,7 +1155,7 @@ function APIparse(response, carrotStickObj) {
 		hourScore(day.hourArray);
 		day.dayScore = Math.round(day.dayScore);
 		console.log(day.dayScore);
-		rl.question("Enter 'Y' to commit, any other input to end ", function(input) {
+		rl.question("Enter 'Y' to commit ", function(input) {
 			if (input === "Y" || input === "y") {
 				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}

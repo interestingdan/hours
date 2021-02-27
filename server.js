@@ -74,11 +74,11 @@ async function newDay(record) {
 }
 
 async function updateScore(userNameArg, scoreArg){
-	const user = await User.findOne({"userName" : userNameArg})
+	/*const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;
 	const saved = await user.save()
 	const newScoreUser = await User.findOne({"userName" : userNameArg})
-	console.log("Your score is now " + newScoreUser.score)
+	console.log("Your score is now " + newScoreUser.score)*/
 };
 
 async function resetScore(userNameArg){
@@ -1074,7 +1074,6 @@ const testResponse = {"date": "2020-01-01",
 }
 
 function parseTime(dateObj){
-	var date = dateObj;
 	var offset = dateObj.utcOffset();
 	var dateString = dateObj.add(offset, 'minutes')
 		.toISOString()
@@ -1092,11 +1091,18 @@ function logYesterday(userName) {
 	logDay(yesterday, userName);
 }
 
-function logDay(momentObj, userName) {
+async function pingRescuetime(dateStringArg, keyArg, kindArg) {
+return await axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`).response;
+}
+
+async function logDay(momentObj, userName) {
 	var carrotStickObj = classifyDay(momentObj);
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
-	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
-	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
+	var key = process.env.USERKEY;
+	var productivityObj = await pingRescuetime(dateString, key, 'productivity');
+	console.log(productivityObj);
+	//var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
+	/*axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
 			response.dateString = dateString;
 			//response.dateDate = momentObj._d;
@@ -1105,9 +1111,9 @@ function logDay(momentObj, userName) {
 			APIparse(response, carrotStickObj);
 			//console.log(productivityObj);
 		})
-		.catch(error => {
+/*		.catch(error => {
 			console.log(error);
-		});
+		});*/
 }
 
 function APIparse(response, carrotStickObj) {
@@ -1155,12 +1161,13 @@ function APIparse(response, carrotStickObj) {
 		hourScore(day.hourArray);
 		day.dayScore = Math.round(day.dayScore);
 		console.log(day.dayScore);
-		rl.question("Enter 'Y' to commit ", function(input) {
+		console.log("No time logged: test function only");
+		/*rl.question("Enter 'Y' to commit ", function(input) {
 			if (input === "Y" || input === "y") {
-				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
+				//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}
 			rl.close();
-		});
+		});*/
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 

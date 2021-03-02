@@ -19,6 +19,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 const logger = require('morgan');
+const { response } = require('express');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -53,6 +54,7 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', function() {
 		console.log("Connection Successful!");
+		logYesterday("InterDan");
 	}
 );
 
@@ -1092,7 +1094,7 @@ function logYesterday(userName) {
 }
 
 async function pingRescuetime(dateStringArg, keyArg, kindArg) {
-return await axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`).response;
+return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
 }
 
 async function logDay(momentObj, userName) {
@@ -1101,17 +1103,18 @@ async function logDay(momentObj, userName) {
 	var key = process.env.USERKEY;
 	var productivityObj = await pingRescuetime(dateString, key, 'productivity');
 	console.log(productivityObj);
-	//var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
+	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
 	/*axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
+			console.log(response);
 			response.dateString = dateString;
 			//response.dateDate = momentObj._d;
 			//checkForDupes(response);
 			response.userName = userName;
-			APIparse(response, carrotStickObj);
+			//APIparse(response, carrotStickObj);
 			//console.log(productivityObj);
 		})
-/*		.catch(error => {
+		.catch(error => {
 			console.log(error);
 		});*/
 }
@@ -1171,7 +1174,7 @@ function APIparse(response, carrotStickObj) {
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 
-logYesterday("InterDan");
+//logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");
 

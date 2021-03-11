@@ -1093,17 +1093,40 @@ function logYesterday(userName) {
 	logDay(yesterday, userName);
 }
 
-async function pingRescuetime(dateStringArg, keyArg, kindArg) {
+function pingRescuetime(dateStringArg, keyArg, kindArg) {
 return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
 }
+
+class DayRecord {
+	constructor (userName, date) {
+		this.userName = userName;
+		this.date = date;
+		this.hourArray = [];
+		this.hourArray.length = 24;
+		this.dayScore = 0;
+	}
+	
+}
+
+class HourRecord {
+	constructor (hourNumb) {
+		this.hourStart = hourNumb;
+		this.productivity = {};
+		this.carrot = 0;
+		this.stick = 0;
+	}
+}
+
 
 async function logDay(momentObj, userName) {
 	var carrotStickObj = classifyDay(momentObj);
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
 	var key = process.env.USERKEY;
-	var productivityObj = await pingRescuetime(dateString, key, 'productivity');
-	console.log(productivityObj);
-	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
+	//var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
+	//queryArr.forEach(element => {console.log(element.data.row_headers)});
+	//some kind of logic to split a multi-day query into single days
+	var today = new DayRecord(userName, momentObj);
+	
 	/*axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
 			console.log(response);

@@ -1098,13 +1098,14 @@ return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=jso
 }
 
 class DayRecord {
-	constructor (userName, date) {
+	constructor (userName, dateObj) {
 		this.userName = userName;
-		this.date = date;
+		this.dateObj = dateObj;
 		this.hourArray = [];
 		this.hourArray.length = 24;
 		this.dayScore = 0;
 	}
+	//method parseData() {
 	
 }
 
@@ -1117,16 +1118,42 @@ class HourRecord {
 	}
 }
 
+function initDayArray(response,beginMomentObj, userName){
+	let mutableMoment = beginMomentObj;
+	let mutableDateString = parseTime(mutableMoment);
+	let firstday = new DayRecord(userName, beginMomentObj);
+	let dayArray = [firstday];
+	for (row of response.rows) {
+		let currentDay = dayArray[dayArray.length - 1];
+		let rowDate = row[0].slice(0, 10);
+		let rowTime = parseInt(row[0].slice(11,13), 10);
+		if (mutableDateString === rowDate) {
+			if (!currentDay.hourArray[rowTime]) {
+			currentDay.hourArray[rowTime] = new HourRecord(rowTime);
+			}
+		} else {
+			mutableMoment = mutableMoment.add(1, 'days');
+			mutableDateString = parseTime(mutableMoment);
+			let newDay = new DayRecord(userName, mutableMoment);
+			dayArray.push(newDay);
+		}
+	};
+	return dayArray;
+}
 
 async function logDay(momentObj, userName) {
-	var carrotStickObj = classifyDay(momentObj);
+	//var carrotStickObj = classifyDay(momentObj);
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
 	var key = process.env.USERKEY;
-	//var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
+	var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
+	//console.log(queryArr);
+	let toDayArray = initDayArray(queryArr[0].data, momentObj, userName);
+	console.log(toDayArray);
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});
-	//some kind of logic to split a multi-day query into single days
-	var today = new DayRecord(userName, momentObj);
 	
+
+
+
 	/*axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
 			console.log(response);

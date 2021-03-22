@@ -1090,6 +1090,7 @@ function classifyDay(momentArg){
 
 function logYesterday(userName) {
 	var yesterday = moment().subtract(1, 'days');
+	console.log(yesterday.format());
 	logDay(yesterday, userName);
 }
 
@@ -1119,14 +1120,19 @@ class HourRecord {
 }
 
 function initDayArray(response,beginMomentObj, userName){
+	console.log(beginMomentObj.format());
 	let mutableMoment = beginMomentObj;
 	let mutableDateString = parseTime(mutableMoment);
 	let firstday = new DayRecord(userName, beginMomentObj);
 	let dayArray = [firstday];
+	console.log(mutableMoment.format());
 	for (row of response.rows) {
 		let currentDay = dayArray[dayArray.length - 1];
 		let rowDate = row[0].slice(0, 10);
 		let rowTime = parseInt(row[0].slice(11,13), 10);
+		//console.log(rowDate.toDate());
+		//console.log(mutableDateString.toDate());
+		//console.log(response);
 		if (mutableDateString === rowDate) {
 			if (!currentDay.hourArray[rowTime]) {
 			currentDay.hourArray[rowTime] = new HourRecord(rowTime);
@@ -1148,7 +1154,7 @@ async function logDay(momentObj, userName) {
 	var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
 	//console.log(queryArr);
 	let toDayArray = initDayArray(queryArr[0].data, momentObj, userName);
-	console.log(toDayArray);
+	//console.log(toDayArray);
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});
 	
 

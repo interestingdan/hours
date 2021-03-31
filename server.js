@@ -1090,7 +1090,8 @@ function classifyDay(momentArg){
 }
 
 function logYesterday(userName) {
-	var yesterday = moment().subtract(1, 'days');
+	//var yesterday = moment().subtract(1, 'days');
+	var yesterday = DateTime.local().minus({ days: 1 });
 	console.log(yesterday.format());
 	logDay(yesterday, userName);
 }

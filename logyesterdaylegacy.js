@@ -1,5 +1,4 @@
 require('dotenv').config()
-const { DateTime } = require("luxon");
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -20,8 +19,6 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 const logger = require('morgan');
-const { response } = require('express');
-const 
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -32,17 +29,8 @@ app.use(logger('dev'));
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'));
 
-/*app.route('/').get((req, res) => {
-	res.render(process.cwd() + '/views/pug/index.pug', {text: 'jello'});
-});*/
-
-//app.use('/', indexRouter);
-
-app.use(express.static(path.join(__dirname, '/public/')));
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
-
-//talk to mongoDB
 
 mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
@@ -51,81 +39,18 @@ mongoose.connect(process.env.MONGO_URI, {
 
 var db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'Connection Error:'));
-
 db.once('open', function() {
-		console.log("Connection Successful!");
-		logYesterday("InterDan");
-	}
+    console.log("Connection Successful!");
+}
 );
 
-
-
-/*const newDay = function(record) {
-	var thisDay = new Day(record);
-	console.log(record);
-	thisDay.save(function(err, data) {
-		if (err) console.log(err);
-	});
-}*/
-
-
-
-async function newDay(record) {
-	var thisDay = new Day(record);
-	await thisDay.save();
-}
-
 async function updateScore(userNameArg, scoreArg){
-	/*const user = await User.findOne({"userName" : userNameArg})
+	const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;
 	const saved = await user.save()
 	const newScoreUser = await User.findOne({"userName" : userNameArg})
-	console.log("Your score is now " + newScoreUser.score)*/
+	console.log("Your score is now " + newScoreUser.score)
 };
-
-async function resetScore(userNameArg){
-	const user = await User.findOne({"userName" : userNameArg})
-		.catch(error => { console.error(error) });
-	if (!user) {
-		console.log("User Not Found")
-	} else {
-	user.score = 0;
-	const saved = await user.save()
-	.catch(error => { console.error(error) });
-	console.log(saved)
-	}
-};
-
-async function showScore(userNameArg){
-	const user = await User.findOne({"userName" : userNameArg})
-		.catch(error => { console.error(error) })
-	if (!user) {
-		console.log("User Not Found")
-	} else {
-	console.log("Your score is: " + user.score);
-	}
-};
-
-async function newUser(record) {
-	var thisUser = new User(record);
-	console.log(record);
-	await thisUser.save();
-};
-
-const searchAll = function(done) {
-	Day.find(null, function(err, data){
-		if (err) console.log(err);
-			console.log(data);
-		});
-	};
-
-async function flush() {
-	await Day.deleteMany({});
-};
-
-//searchAll({});
-
 
 
 function hourScore(hourArray){
@@ -1025,58 +950,9 @@ const weekdayPicker = {
 	7 : weekend
 }
 
-const testResponse = {"date": "2020-01-01",
-"data":
-	{rows: [
-	[ '2020-03-11T00:00:00', 59, 1, 1 ],
-	[ '2020-03-11T00:00:00', 49, 1, 0 ],
-	[ '2020-03-11T00:00:00', 15, 1, -2 ],
-
-	[ '2020-03-11T07:00:00', 357, 1, -2 ],
-	[ '2020-03-11T07:00:00', 320, 1, 0 ],
-	[ '2020-03-11T07:00:00', 58, 1, -1 ],
-	[ '2020-03-11T07:00:00', 19, 1, 1 ],
-
-	[ '2020-03-11T08:00:00', 1452, 1, -2 ],
-	[ '2020-03-11T10:00:00', 67, 1, -2 ],
-
-	[ '2020-03-11T11:00:00', 1013, 1, -2 ],
-
-	[ '2020-03-11T12:00:00', 1303, 1, -2 ],
-	[ '2020-03-11T12:00:00', 915, 1, 0 ],
-	[ '2020-03-11T12:00:00', 215, 1, 2 ],
-	[ '2020-03-11T12:00:00', 116, 1, 1 ],
-	[ '2020-03-11T12:00:00', 105, 1, -1 ],
-
-	[ '2020-03-11T13:00:00', 1432, 1, 0 ],
-	[ '2020-03-11T13:00:00', 1282, 1, -2 ],
-	[ '2020-03-11T13:00:00', 293, 1, 2 ],
-	[ '2020-03-11T13:00:00', 73, 1, -1 ],
-	[ '2020-03-11T13:00:00', 52, 1, 1 ],
-
-	[ '2020-03-11T14:00:00', 2169, 1, 0 ],
-	[ '2020-03-11T14:00:00', 339, 1, 1 ],
-	[ '2020-03-11T14:00:00', 206, 1, -1 ],
-	[ '2020-03-11T14:00:00', 65, 1, 2 ],
-
-	[ '2020-03-11T15:00:00', 2728, 1, 0 ],
-	[ '2020-03-11T15:00:00', 212, 1, -2 ],
-	[ '2020-03-11T15:00:00', 83, 1, 1 ],
-	[ '2020-03-11T15:00:00', 24, 1, 2 ],
-
-	[ '2020-03-11T16:00:00', 142, 1, -1 ],
-	[ '2020-03-11T16:00:00', 62, 1, 0 ],
-	[ '2020-03-11T16:00:00', 34, 1, 1 ],
-
-	[ '2020-03-11T17:00:00', 629, 1, -2 ],
-	[ '2020-03-11T17:00:00', 30, 1, 0 ],
-	[ '2020-03-11T17:00:00', 13, 1, 1 ],
-	[ '2020-03-11T17:00:00', 3, 1, -1 ],
-]
-	}
-}
 
 function parseTime(dateObj){
+	var date = dateObj;
 	var offset = dateObj.utcOffset();
 	var dateString = dateObj.add(offset, 'minutes')
 		.toISOString()
@@ -1085,95 +961,31 @@ function parseTime(dateObj){
 }
 
 function classifyDay(momentArg){
-	var dayNumber = momentArg.isoWeekday();
-	return weekdayPicker[dayNumber];
+    var dayNumber = momentArg.isoWeekday();
+    return weekdayPicker[dayNumber];
 }
-
+    
 function logYesterday(userName) {
-	var yesterday = moment().subtract(1, 'days');
-	console.log(yesterday.format());
-	logDay(yesterday, userName);
+    var yesterday = moment().subtract(1, 'days');
+    logDay(yesterday, userName);
 }
 
-function pingRescuetime(dateStringArg, keyArg, kindArg) {
-return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
-}
-
-class DayRecord {
-	constructor (userName, dateObj) {
-		this.userName = userName;
-		this.dateObj = dateObj;
-		this.hourArray = [];
-		this.hourArray.length = 24;
-		this.dayScore = 0;
-	}
-	//method parseData() {
-	
-}
-
-class HourRecord {
-	constructor (hourNumb) {
-		this.hourStart = hourNumb;
-		this.productivity = {};
-		this.carrot = 0;
-		this.stick = 0;
-	}
-}
-
-function initDayArray(response,beginMomentObj, userName){
-	console.log(beginMomentObj.format());
-	let mutableMoment = beginMomentObj;
-	let mutableDateString = parseTime(mutableMoment);
-	let firstday = new DayRecord(userName, beginMomentObj);
-	let dayArray = [firstday];
-	console.log(mutableMoment.format());
-	for (row of response.rows) {
-		let currentDay = dayArray[dayArray.length - 1];
-		let rowDate = row[0].slice(0, 10);
-		let rowTime = parseInt(row[0].slice(11,13), 10);
-		//console.log(rowDate.toDate());
-		//console.log(mutableDateString.toDate());
-		//console.log(response);
-		if (mutableDateString === rowDate) {
-			if (!currentDay.hourArray[rowTime]) {
-			currentDay.hourArray[rowTime] = new HourRecord(rowTime);
-			}
-		} else {
-			mutableMoment = mutableMoment.add(1, 'days');
-			mutableDateString = parseTime(mutableMoment);
-			let newDay = new DayRecord(userName, mutableMoment);
-			dayArray.push(newDay);
-		}
-	};
-	return dayArray;
-}
-
-async function logDay(momentObj, userName) {
-	//var carrotStickObj = classifyDay(momentObj);
+function logDay(momentObj, userName) {
+	var carrotStickObj = classifyDay(momentObj);
 	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
-	var key = process.env.USERKEY;
-	var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
-	//console.log(queryArr);
-	let toDayArray = initDayArray(queryArr[0].data, momentObj, userName);
-	//console.log(toDayArray);
-	//queryArr.forEach(element => {console.log(element.data.row_headers)});
-	
-
-
-
-	/*axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
+	var fetchString = `restrict_begin=${dateString}&restrict_end=${dateString}`;
+	axios.get(`https://www.rescuetime.com/anapi/data?key=B63lvEkh_mK25YZwNFqFHzKz1KvOZyY79SyXKj6a&format=json&${fetchString}&perspective=interval&resolution_time=hour&restrict_kind=productivity`)
 		.then(response => {
-			console.log(response);
 			response.dateString = dateString;
 			//response.dateDate = momentObj._d;
 			//checkForDupes(response);
 			response.userName = userName;
-			//APIparse(response, carrotStickObj);
+			APIparse(response, carrotStickObj);
 			//console.log(productivityObj);
 		})
 		.catch(error => {
 			console.log(error);
-		});*/
+		});
 }
 
 function APIparse(response, carrotStickObj) {
@@ -1221,20 +1033,13 @@ function APIparse(response, carrotStickObj) {
 		hourScore(day.hourArray);
 		day.dayScore = Math.round(day.dayScore);
 		console.log(day.dayScore);
-		console.log("No time logged: test function only");
-		/*rl.question("Enter 'Y' to commit ", function(input) {
+		rl.question("Enter 'Y' to commit ", function(input) {
 			if (input === "Y" || input === "y") {
-				//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
+				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}
 			rl.close();
-		});*/
+		});
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 
-//logYesterday("InterDan");
-//resetScore("InterDan");
-//showScore("InterDan");
-
-
-
-module.exports = app;
+logYesterday("InterDan");

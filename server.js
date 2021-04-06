@@ -21,6 +21,7 @@ const rl = readline.createInterface({
 });
 const logger = require('morgan');
 const { response } = require('express');
+const userSettingsPlaceHolder= require("./AaronSettings.js");
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -54,8 +55,8 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', function() {
 		console.log("Connection Successful!");
-		//logYesterday("InterDan");
-		multiDayTest("InterDan");
+		logYesterday("InterDan");
+		//multiDayTest("InterDan");
 	}
 );
 
@@ -1088,11 +1089,11 @@ function classifyDay(momentArg){
 	return weekdayPicker[dayNumber];
 }
 
-function logYesterday(userName) {
+function logYesterday(userName, userSettingsPlaceHolder) {
 	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
 	console.log(yesterday.toString());
 
-	logDay(yesterday, yesterday, userName);
+	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder);
 }
 
 function multiDayTest(userName) {
@@ -1120,16 +1121,23 @@ class DayRecord {
 }
 
 class HourRecord {
-	constructor (hourNumb) {
+	constructor (hourNumb, userSettings) {
 		this.hourStart = hourNumb;
-		this.categories = 
-		this.productivity = {};
+		this.categories = userSettings.kind.categories;
+		this.activities = userSettings.kind.activities;
+		this.productivity = {
+			"VUnp" : 0,
+			"Unpr" : 0,
+			"Neut" : 0,
+			"Prod" : 0,
+			"VPro" : 0,
+		};
 		this.carrot = 0;
 		this.stick = 0;
 	}
 }
 
-function initDayArray(response, startDateObj, userName){
+function initDayArray(response, startDateObj, userName, userSettings){
 	//console.log(beginMomentObj.format());
 	let mutableDateTime = startDateObj;
 	let mutableDateString = parseTime(mutableDateTime);
@@ -1139,13 +1147,13 @@ function initDayArray(response, startDateObj, userName){
 	for (row of response.rows) {
 		let currentDay = dayArray[dayArray.length - 1];
 		let rowDate = row[0].slice(0, 10);
-		let rowTime = parseInt(row[0].slice(11,13), 10);
+		let rowTime = parseInt(row[0].slice(11, 13), 10);
 		//console.log(rowDate.toDate());
 		//console.log(mutableDateString.toDate());
 		//console.log(response);
 		if (mutableDateString === rowDate) {
 			if (!currentDay.hourArray[rowTime]) {
-			currentDay.hourArray[rowTime] = new HourRecord(rowTime);
+			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
 			}
 		} else {
 			mutableDateTime = mutableDateTime.plus({days: 1});
@@ -1157,7 +1165,7 @@ function initDayArray(response, startDateObj, userName){
 	return dayArray;
 }
 
-async function logDay(startDate, endDate, userName) {
+async function logDay(startDate, endDate, userName, userSettings) {
 	//var carrotStickObj = classifyDay(momentObj);
 	//fetch user carrotstick object from database
 	var startDateString = parseTime(startDate);
@@ -1166,7 +1174,7 @@ async function logDay(startDate, endDate, userName) {
 	var queryArr = await Promise.all([
 		pingRescuetime(startDateString, endDateString, key, 'productivity'), pingRescuetime(startDateString, endDateString, key, 'category'), pingRescuetime(startDateString, endDateString, key, 'activity')]);
 	//console.log(queryArr);
-	let toDayArray = initDayArray(queryArr[0].data, startDate, userName);
+	let toDayArray = initDayArray(queryArr[0].data, startDate, userSettings);
 	//console.log(toDayArray);
 
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});

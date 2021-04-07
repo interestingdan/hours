@@ -13,7 +13,7 @@ const User = require("./models/User.js");
 const moment = require('moment');
 moment().format();
 const pug = require('pug');
-//const içndexRouter = require('./routes/index');
+//const indexRouter = require('./routes/index');
 const readline = require("readline");
 const rl = readline.createInterface({
     input: process.stdin,
@@ -21,7 +21,7 @@ const rl = readline.createInterface({
 });
 const logger = require('morgan');
 const { response } = require('express');
-const 
+const userSettingsPlaceHolder= require("./AaronSettings.js");
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -55,7 +55,8 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', function() {
 		console.log("Connection Successful!");
-		logYesterday("InterDan");
+		//logYesterday("InterDan");
+		//multiDayTest("InterDan");
 	}
 );
 
@@ -1077,9 +1078,8 @@ const testResponse = {"date": "2020-01-01",
 }
 
 function parseTime(dateObj){
-	var offset = dateObj.utcOffset();
-	var dateString = dateObj.add(offset, 'minutes')
-		.toISOString()
+	var dateString = dateObj
+		.toString()
 		.slice(0, 10);
 	return dateString;
 }
@@ -1089,20 +1089,29 @@ function classifyDay(momentArg){
 	return weekdayPicker[dayNumber];
 }
 
-function logYesterday(userName) {
-	var yesterday = moment().subtract(1, 'days');
-	console.log(yesterday.format());
-	logDay(yesterday, userName);
+function logYesterday(userName, userSettingsPlaceHolder) {
+	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
+	console.log(yesterday.toString());
+
+	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder);
 }
 
-function pingRescuetime(dateStringArg, keyArg, kindArg) {
-return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${dateStringArg}&restrict_end=${dateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
+function multiDayTest(userName) {
+	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 5 });
+	console.log(yesterday.toString());
+	var today = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1});
+	logDay(yesterday, today, userName);
+}
+
+function pingRescuetime(startDateStringArg, endDateStringArg, keyArg, kindArg) {
+return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${startDateStringArg}&restrict_end=${endDateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
 }
 
 class DayRecord {
 	constructor (userName, dateObj) {
 		this.userName = userName;
 		this.dateObj = dateObj;
+		this.dateString = parseTime(dateObj);
 		this.hourArray = [];
 		this.hourArray.length = 24;
 		this.dayScore = 0;
@@ -1112,50 +1121,62 @@ class DayRecord {
 }
 
 class HourRecord {
-	constructor (hourNumb) {
+	constructor (hourNumb, userSettings) {
 		this.hourStart = hourNumb;
-		this.productivity = {};
+		this.categories = userSettings.kind.categories;
+		this.activities = userSettings.kind.activities;
+		this.productivity = {
+			"VUnp" : 0,
+			"Unpr" : 0,
+			"Neut" : 0,
+			"Prod" : 0,
+			"VPro" : 0,
+		};
 		this.carrot = 0;
 		this.stick = 0;
 	}
 }
 
-function initDayArray(response,beginMomentObj, userName){
-	console.log(beginMomentObj.format());
-	let mutableMoment = beginMomentObj;
-	let mutableDateString = parseTime(mutableMoment);
-	let firstday = new DayRecord(userName, beginMomentObj);
+function initDayArray(response, startDateObj, userName, userSettings){
+	//console.log(beginMomentObj.format());
+	let mutableDateTime = startDateObj;
+	let mutableDateString = parseTime(mutableDateTime);
+	let firstday = new DayRecord(userName, startDateObj);
 	let dayArray = [firstday];
-	console.log(mutableMoment.format());
+	//console.log(mutableMoment.format());
 	for (row of response.rows) {
 		let currentDay = dayArray[dayArray.length - 1];
 		let rowDate = row[0].slice(0, 10);
-		let rowTime = parseInt(row[0].slice(11,13), 10);
+		let rowTime = parseInt(row[0].slice(11, 13), 10);
 		//console.log(rowDate.toDate());
 		//console.log(mutableDateString.toDate());
 		//console.log(response);
 		if (mutableDateString === rowDate) {
 			if (!currentDay.hourArray[rowTime]) {
-			currentDay.hourArray[rowTime] = new HourRecord(rowTime);
+			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
 			}
 		} else {
-			mutableMoment = mutableMoment.add(1, 'days');
-			mutableDateString = parseTime(mutableMoment);
-			let newDay = new DayRecord(userName, mutableMoment);
+			mutableDateTime = mutableDateTime.plus({days: 1});
+			mutableDateString = parseTime(mutableDateTime);
+			let newDay = new DayRecord(userName, mutableDateTime);
 			dayArray.push(newDay);
 		}
 	};
 	return dayArray;
 }
 
-async function logDay(momentObj, userName) {
+async function logDay(startDate, endDate, userName, userSettings) {
 	//var carrotStickObj = classifyDay(momentObj);
-	var dateString = parseTime(momentObj);//select today's date and convert it to a format the API can read
+	//fetch user carrotstick object from database
+	var startDateString = parseTime(startDate);
+	var endDateString = parseTime(endDate);
 	var key = process.env.USERKEY;
-	var queryArr = await Promise.all([pingRescuetime(dateString, key, 'productivity'), pingRescuetime(dateString, key, 'category'), pingRescuetime(dateString, key, 'activity')]);
+	var queryArr = await Promise.all([
+		pingRescuetime(startDateString, endDateString, key, 'productivity'), pingRescuetime(startDateString, endDateString, key, 'category'), pingRescuetime(startDateString, endDateString, key, 'activity')]);
 	//console.log(queryArr);
-	let toDayArray = initDayArray(queryArr[0].data, momentObj, userName);
+	let toDayArray = initDayArray(queryArr[0].data, startDate, userSettings);
 	//console.log(toDayArray);
+
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});
 	
 
@@ -1175,6 +1196,8 @@ async function logDay(momentObj, userName) {
 			console.log(error);
 		});*/
 }
+
+
 
 function APIparse(response, carrotStickObj) {
 	var {rows:row} = response.data; //no variables that end in 's'

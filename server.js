@@ -143,7 +143,7 @@ function hourScore(hourArray){
 const modifier = 0.0086;
 
 
-const weekdayPicker = {
+/*const weekdayPicker = {
 	1 : workday,
 	2 : workday,
 	3 : workday,
@@ -151,7 +151,7 @@ const weekdayPicker = {
 	5 : workday,
 	6 : weekend,
 	7 : weekend
-}
+}*/
 
 const testResponse = {"date": "2020-01-01",
 "data":
@@ -266,10 +266,7 @@ class HourRecord {
 
 function initDayArray(response, startDateObj, userName, userSettings){
 	//console.log(beginMomentObj.format());
-	let mutableDateTime = startDateObj;
-	let mutableDateString = parseTime(mutableDateTime);
-	let firstday = new DayRecord(userName, startDateObj);
-	let dayArray = [firstday];
+	
 	//console.log(mutableMoment.format());
 	for (row of response.rows) {
 		let currentDay = dayArray[dayArray.length - 1];
@@ -298,10 +295,27 @@ async function logDay(startDate, endDate, userName, userSettings) {
 	var startDateString = parseTime(startDate);
 	var endDateString = parseTime(endDate);
 	var key = process.env.USERKEY;
-	var queryArr = await Promise.all([
-		pingRescuetime(startDateString, endDateString, key, 'productivity'), pingRescuetime(startDateString, endDateString, key, 'category'), pingRescuetime(startDateString, endDateString, key, 'activity')]);
-	//console.log(queryArr);
-	let toDayArray = initDayArray(queryArr[0].data, startDate, userSettings);
+	response = await pingRescuetime(startDateString, endDateString, key, 'activity');
+	let mutableDateTime = startDate; //declares a new object that will mutate as the response is processed, leaving startDate static
+	let mutableDateString = parseTime(mutableDateTime);
+	let firstday = new DayRecord(userName, startDateObj);
+	let dayArray = [firstday];
+	for (row of response.data.rows) {
+		let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
+		let rowDate = row[0].slice(0, 10);
+		let rowTime = parseInt(row[0].slice(11, 13), 10);
+		let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = row;
+		if (mutableDateString === rowDate) {
+			if (!currentDay.hourArray[rowTime]) {
+			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
+			}
+		} else {
+			mutableDateTime = mutableDateTime.plus({days: 1});
+			mutableDateString = parseTime(mutableDateTime);
+			let newDay = new DayRecord(userName, mutableDateTime);
+			dayArray.push(newDay);
+		}
+	};
 	//console.log(toDayArray);
 
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});

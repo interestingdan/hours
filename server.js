@@ -55,7 +55,7 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 
 db.once('open', function() {
 		console.log("Connection Successful!");
-		logYesterday("InterDan");
+		//logYesterday("InterDan");
 		//multiDayTest("InterDan");
 	}
 );

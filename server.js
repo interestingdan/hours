@@ -56,7 +56,7 @@ db.on('error', console.error.bind(console, 'Connection Error:'));
 db.once('open', function() {
 		console.log("Connection Successful!");
 		//logYesterday("InterDan");
-		//multiDayTest("InterDan");
+		multiDayTest("InterDan");
 	}
 );
 
@@ -70,7 +70,7 @@ db.once('open', function() {
 	});
 }*/
 
-
+console.log(userSettingsPlaceHolder);
 
 async function newDay(record) {
 	var thisDay = new Day(record);
@@ -220,14 +220,14 @@ function logYesterday(userName, userSettingsPlaceHolder) {
 	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
 	console.log(yesterday.toString());
 
-	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder);
+	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder.settings);
 }
 
 function multiDayTest(userName) {
 	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 5 });
 	console.log(yesterday.toString());
 	var today = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1});
-	logDay(yesterday, today, userName);
+	logDay(yesterday, today, userName, userSettingsPlaceHolder.settings);
 }
 
 function pingRescuetime(startDateStringArg, endDateStringArg, keyArg, kindArg) {
@@ -289,32 +289,37 @@ function initDayArray(response, startDateObj, userName, userSettings){
 	return dayArray;
 }
 
-async function logDay(startDate, endDate, userName, userSettings) {
+async function logDay(startDateObj, endDateObj, userName, userSettings) {
 	//var carrotStickObj = classifyDay(momentObj);
 	//fetch user carrotstick object from database
-	var startDateString = parseTime(startDate);
-	var endDateString = parseTime(endDate);
+	var startDateString = parseTime(startDateObj);
+	var endDateString = parseTime(endDateObj);
 	var key = process.env.USERKEY;
-	response = await pingRescuetime(startDateString, endDateString, key, 'activity');
-	let mutableDateTime = startDate; //declares a new object that will mutate as the response is processed, leaving startDate static
+	let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
+	let mutableDateTime = startDateObj; //declares a new object that will mutate as the response is processed, leaving startDate static
 	let mutableDateString = parseTime(mutableDateTime);
 	let firstday = new DayRecord(userName, startDateObj);
 	let dayArray = [firstday];
 	for (row of response.data.rows) {
+		//console.log(row);
 		let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
+		//console.log(dayArray);
 		let rowDate = row[0].slice(0, 10);
-		let rowTime = parseInt(row[0].slice(11, 13), 10);
+		let rowTime = parseInt(row[0].slice(11, 13));
 		let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = row;
-		if (mutableDateString === rowDate) {
-			if (!currentDay.hourArray[rowTime]) {
-			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
-			}
-		} else {
+		if (mutableDateString !== rowDate) {
 			mutableDateTime = mutableDateTime.plus({days: 1});
 			mutableDateString = parseTime(mutableDateTime);
 			let newDay = new DayRecord(userName, mutableDateTime);
 			dayArray.push(newDay);
+			currentDay = dayArray[dayArray.length - 1];
+			console.log('new day' + currentDay);
 		}
+		if (!currentDay.hourArray[rowTime]) {
+			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
+			console.log('new hour' + currentDay.hourArray[rowTime-1])
+		}
+
 	};
 	//console.log(toDayArray);
 

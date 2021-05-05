@@ -1043,3 +1043,4 @@ function APIparse(response, carrotStickObj) {
 	}
 
 logYesterday("InterDan");
+//updateScore("InterDan", 479);

@@ -211,9 +211,9 @@ function parseTime(dateObj){
 	return dateString;
 }
 
-function classifyDay(momentArg){
-	var dayNumber = momentArg.isoWeekday();
-	return weekdayPicker[dayNumber];
+function classifyDay(momentArg, userSettings){
+	var dayNumber = momentArg.weekday();
+	return userSettings.weekdayPicker[dayNumber - 1];
 }
 
 function logYesterday(userName, userSettingsPlaceHolder) {
@@ -235,13 +235,14 @@ return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=jso
 }
 
 class DayRecord {
-	constructor (userName, dateObj) {
+	constructor (userName, dateObj, userSettings) {
 		this.userName = userName;
 		this.dateObj = dateObj;
 		this.dateString = parseTime(dateObj);
 		this.hourArray = [];
 		this.hourArray.length = 24;
 		this.dayScore = 0;
+		this.carrotStick = classifyDay(dateObj, userSettings);
 	}
 	//method parseData() {
 	
@@ -298,7 +299,7 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 	let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
 	let mutableDateTime = startDateObj; //declares a new object that will mutate as the response is processed, leaving startDate static
 	let mutableDateString = parseTime(mutableDateTime);
-	let firstday = new DayRecord(userName, startDateObj);
+	let firstday = new DayRecord(userName, startDateObj, userSettings);
 	let dayArray = [firstday];
 	for (row of response.data.rows) {
 		//console.log(row);

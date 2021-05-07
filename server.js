@@ -212,8 +212,9 @@ function parseTime(dateObj){
 }
 
 function classifyDay(momentArg, userSettings){
-	var dayNumber = momentArg.weekday();
-	return userSettings.weekdayPicker[dayNumber - 1];
+	var dayNumber = momentArg.weekday;
+	var dot = userSettings.weekdayPicker[dayNumber]; //returns a string
+	return userSettings.carrotStick[[dot]]; //turns that string to a property name
 }
 
 function logYesterday(userName, userSettingsPlaceHolder) {
@@ -311,14 +312,14 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 		if (mutableDateString !== rowDate) {
 			mutableDateTime = mutableDateTime.plus({days: 1});
 			mutableDateString = parseTime(mutableDateTime);
-			let newDay = new DayRecord(userName, mutableDateTime);
+			let newDay = new DayRecord(userName, mutableDateTime, userSettings);
 			dayArray.push(newDay);
 			currentDay = dayArray[dayArray.length - 1];
-			console.log('new day' + currentDay);
+			console.log('new day ' + currentDay);
 		}
 		if (!currentDay.hourArray[rowTime]) {
 			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
-			console.log('new hour' + currentDay.hourArray[rowTime-1])
+			console.log('new hour'  + currentDay.hourArray[rowTime-1])
 		}
 
 	};

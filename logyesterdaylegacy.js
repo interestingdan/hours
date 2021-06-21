@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 5000;
 const axios = require('axios');
 const bodyParser = require("body-parser");
 const path = require('path');
@@ -40,8 +40,9 @@ mongoose.connect(process.env.MONGO_URI, {
 var db = mongoose.connection;
 
 db.once('open', function() {
-    console.log("Connection Successful!");
-}
+		console.log("Connection Successful!");
+		logYesterday("InterDan");
+	}
 );
 
 async function updateScore(userNameArg, scoreArg){
@@ -1038,9 +1039,11 @@ function APIparse(response, carrotStickObj) {
 				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}
 			rl.close();
+			process.kill(process.pid, 'SIGTERM');
 		});
+
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	}
 
-logYesterday("InterDan");
+
 //updateScore("InterDan", 479);

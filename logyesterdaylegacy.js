@@ -1039,7 +1039,7 @@ function APIparse(response, carrotStickObj) {
 				updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}
 			rl.close();
-			process.kill(process.pid, 'SIGTERM');
+
 		});
 
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });

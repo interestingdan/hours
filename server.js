@@ -300,9 +300,9 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 	let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
 	let mutableDateTime = startDateObj; //declares a new object that will mutate as the response is processed, leaving startDate static
 	let mutableDateString = parseTime(mutableDateTime);
-	let firstday = new DayRecord(userName, startDateObj, userSettings);
-	let dayArray = [firstday];
-	for (row of response.data.rows) {
+	let firstDay = new DayRecord(userName, startDateObj, userSettings);
+	let dayArray = [firstDay];
+	for (row in response.data.rows) {
 		//console.log(row);
 		let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
 		//console.log(dayArray);
@@ -315,12 +315,13 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 			let newDay = new DayRecord(userName, mutableDateTime, userSettings);
 			dayArray.push(newDay);
 			currentDay = dayArray[dayArray.length - 1];
-			console.log('new day ' + currentDay);
+			console.log('New day ' + currentDay);
 		}
 		if (!currentDay.hourArray[rowTime]) {
 			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
-			console.log('new hour'  + currentDay.hourArray[rowTime-1])
+			console.log('New hour ' + currentDay.hourArray[rowTime - 1])
 		}
+
 
 	};
 	//console.log(toDayArray);

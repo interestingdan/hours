@@ -10,8 +10,8 @@ const settings = {
 			}
 		},
 	weekdayPicker: {
-	2 : "workday",
 	1 : "workday",
+	2 : "workday",
 	3 : "workday",
 	4 : "workday",
 	5 : "workday",
@@ -30,8 +30,9 @@ const settings = {
 		},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
 		}
-
 	},
 	{hourStarts: 1, byProd:{
 		VUnp: -8,
@@ -41,16 +42,21 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
 		}
 	},
 	{hourStarts: 2, byProd:{
-		VUnp: -8,
+		VUnp: -8, 
 		Unpr: -6,
 		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 3, byProd:{
@@ -61,6 +67,9 @@ const settings = {
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 4, byProd:{
@@ -71,6 +80,9 @@ const settings = {
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 5, byProd:{
@@ -81,6 +93,9 @@ const settings = {
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 6, byProd:{
@@ -91,6 +106,9 @@ const settings = {
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 7, byProd:{
@@ -101,6 +119,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 8, byProd:{
@@ -111,6 +132,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 9, byProd:{
@@ -121,6 +145,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 10, byProd:{
@@ -131,6 +158,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 11, byProd:{
@@ -141,6 +171,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 12, byProd:{
@@ -151,6 +184,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 13, byProd:{
@@ -161,6 +197,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 14, byProd:{
@@ -171,6 +210,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 15, byProd:{
@@ -181,6 +223,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 16, byProd:{
@@ -191,6 +236,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 17, byProd:{
@@ -201,6 +249,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 18, byProd:{
@@ -211,6 +262,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 19, byProd:{
@@ -221,6 +275,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 20, byProd:{
@@ -231,6 +288,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 21, byProd:{
@@ -251,6 +311,9 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 23, byProd:{
@@ -261,7 +324,11 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
-		}}],
+		},
+		byAct: {
+		
+		}
+		}],
 weekend: [
 	{	hourStarts: 0,
 		byProd:{
@@ -273,6 +340,9 @@ weekend: [
 		},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 
 	},
@@ -284,6 +354,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 2, byProd:{
@@ -294,6 +367,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 3, byProd:{
@@ -304,6 +380,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 4, byProd:{
@@ -314,6 +393,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 5, byProd:{
@@ -324,6 +406,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 6, byProd:{
@@ -334,6 +419,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 7, byProd:{
@@ -344,6 +432,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 8, byProd:{
@@ -354,6 +445,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 9, byProd:{
@@ -364,6 +458,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 10, byProd:{
@@ -374,6 +471,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 11, byProd:{
@@ -384,6 +484,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 12, byProd:{
@@ -394,6 +497,9 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 13, byProd:{
@@ -404,6 +510,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 14, byProd:{
@@ -414,6 +523,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 15, byProd:{
@@ -424,6 +536,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 16, byProd:{
@@ -434,6 +549,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 17, byProd:{
@@ -444,6 +562,9 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 18, byProd:{
@@ -454,6 +575,9 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 19, byProd:{
@@ -464,6 +588,9 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 20, byProd:{
@@ -474,6 +601,9 @@ weekend: [
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 21, byProd:{
@@ -484,6 +614,9 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 22, byProd:{
@@ -494,6 +627,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 23, byProd:{
@@ -504,6 +640,9 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	}
 ]

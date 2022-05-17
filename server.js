@@ -19,9 +19,13 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+const fs = require("fs");
 const logger = require('morgan');
 const { response } = require('express');
 const userSettingsPlaceHolder= require("./AaronSettings.js");
+const rawSample = fs.readFileSync('singleDayResponseSample.json');
+var sampleResponse = JSON.parse(rawSample);
+//console.log(sampleResponse);
 
 app.use(bodyParser.urlencoded({extended: false}));
 
@@ -40,7 +44,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, '/public/')));
 
-app.listen(port, () => console.log(`App listening on port ${port}!`));
+//app.listen(port, () => console.log(`App listening on port ${port}!`)); // - needed to run
 
 //talk to mongoDB
 
@@ -53,12 +57,15 @@ var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Connection Error:'));
 
-db.once('open', function() {
+/*db.once('open', function() {
 		console.log("Connection Successful!");
-		//logYesterday("InterDan");
-		multiDayTest("InterDan");
+		logYesterday("InterDan", userSettingsPlaceHolder);
+		//multiDayTest("InterDan");
+		//saveSample();
 	}
 );
+*/  //- also needed to run
+
 
 
 
@@ -70,7 +77,7 @@ db.once('open', function() {
 	});
 }*/
 
-console.log(userSettingsPlaceHolder);
+//aconsole.log(userSettingsPlaceHolder);
 
 async function newDay(record) {
 	var thisDay = new Day(record);
@@ -216,10 +223,12 @@ function classifyDay(momentArg, userSettings){
 	var dot = userSettings.weekdayPicker[dayNumber]; //returns a string
 	return userSettings.carrotStick[[dot]]; //turns that string to a property name
 }
+//ToDo: don't do any of this, change the above to pick a setting from an array
+
 
 function logYesterday(userName, userSettingsPlaceHolder) {
 	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
-	console.log(yesterday.toString());
+	//console.log(yesterday.toString());
 
 	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder.settings);
 }
@@ -235,37 +244,136 @@ function pingRescuetime(startDateStringArg, endDateStringArg, keyArg, kindArg) {
 return axios.get(`https://www.rescuetime.com/anapi/data?key=${keyArg}&format=json&restrict_begin=${startDateStringArg}&restrict_end=${endDateStringArg}&perspective=interval&resolution_time=hour&restrict_kind=${kindArg}`);
 }
 
+
+async function saveSample() {
+	let yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
+	let dateString = parseTime(yesterday);
+	let key = process.env.USERKEY;
+	let response = await pingRescuetime(dateString, dateString, key, 'activity');
+	let data = JSON.stringify(response.data, null, 2);
+	fs.writeFileSync('singleDayResponseSample.json', data);
+	console.log('done');
+}
+
+class ActivityRecord {
+ constructor (rowData) {
+ let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = rowData;
+ this.appName = rowActivity;
+ this.totalSeconds = rowTotalSeconds;
+ this.rowCategory = rowCategory;
+ this.rowProductivity = rowProductivity;
+ this.activityCarrot = 0;
+ this.activityStick = 0;
+ }
+ addScore(score){
+ this.activityCarrot = score;
+ }
+ subtractScore(score) {
+ this.activityStick = score;
+ }
+};
+
+class HourRecord {
+	constructor (hourNumb, hourSettings) {
+		this.hourStart = hourNumb;
+		this.activitySettings = hourSettings.byAct;
+		this.categorySettings = hourSettings.byCat;
+		this.productivitySettings = hourSettings.byProd;
+		this.activities = [];
+		this.totalTime = 0;
+		this.carrot = 0;
+		this.stick = 0;
+	}
+
+	parseRow(rowData) {
+		let newActivity = new ActivityRecord (rowData);
+		let actName = newActivity.appName;
+		if (this.activitySettings[actName] != undefined) {
+			var activityScore = this.activitySettings[newActivity.appName] * newActivity.totalSeconds * modifier;
+
+		} else if (this.categorySettings[newActivity.rowCategory] != undefined) {
+			console.log('cat found');
+			console.log(this.categorySettings[newActivity.rowCategory]);
+			var activityScore = this.activitySettings[[newActivity.rowCategory]] * newActivity.totalSeconds * modifier;
+			//console.log(activityScore);
+
+		} else {
+			console.log('prod used')
+			let prodNumber = newActivity.rowProductivity;
+			let prodLevel = function (prodNumber) {
+			-2 : "VUnp",
+			-1 : "Unpr",
+			0 : "Neut",
+			1 : "Prod",
+			2 : "VPro"
+			}
+
+
+/*			case -2:
+			return "VUnp";
+			break;
+			case -1:
+			return "Unpr";
+			break;
+			case 0:
+			return "Neut";
+			break;
+			case 1:
+			return "Prod";
+			break;
+			case 2:
+			return "VPro";
+			break;
+			}*/
+			var activityScore = this.activitySettings[[prodLevel]] * newActivity.totalSeconds * modifier;
+			//console.log(this.activitySettings[prodLevel]);
+			//console.log(newActivity.totalSeconds);
+			//console.log(activityScore);
+			}
+		
+		//console.log(activityScore);
+		if (activityScore > 0) {
+				this.carrot += activityScore;
+				this.totalTime += newActivity.totalSeconds;
+				newActivity.addScore(activityScore);
+			} else {
+				this.totalTime += newActivity.totalSeconds;
+				this.stick += activityScore;
+				newActivity.subtractScore(activityScore);
+			}
+		this.activities.push(newActivity);
+		}
+}
+
 class DayRecord {
 	constructor (userName, dateObj, userSettings) {
 		this.userName = userName;
 		this.dateObj = dateObj;
 		this.dateString = parseTime(dateObj);
 		this.hourArray = [];
-		this.hourArray.length = 24;
 		this.dayScore = 0;
-		this.carrotStick = classifyDay(dateObj, userSettings);
+		this.daySettings = classifyDay(dateObj, userSettings);
+		for (let i = 0; i < 24; i++) {
+			let hourSettings = this.daySettings[i];
+			let newHour = new HourRecord (i, hourSettings)
+			this.hourArray.push(newHour);
+		}
 	}
-	//method parseData() {
-	
+	finalise() {
+		for (let hour in this.hourArray) {
+			let hourScore = hour.carrot - hour.stick
+			console.log(`${hour.hourStarts} : ${hourScore}`);
+			this.dayScore += hourScore;
+			console.log(`Total score for ${dateString} : ${this.dayScore}`);
+		}
+	}
+
 }
 
-class HourRecord {
-	constructor (hourNumb, userSettings) {
-		this.hourStart = hourNumb;
-		this.categories = userSettings.kind.categories;
-		this.activities = userSettings.kind.activities;
-		this.productivity = {
-			"VUnp" : 0,
-			"Unpr" : 0,
-			"Neut" : 0,
-			"Prod" : 0,
-			"VPro" : 0,
-		};
-		this.carrot = 0;
-		this.stick = 0;
-	}
-}
 
+
+
+/*
 function initDayArray(response, startDateObj, userName, userSettings){
 	//console.log(beginMomentObj.format());
 	
@@ -290,40 +398,40 @@ function initDayArray(response, startDateObj, userName, userSettings){
 	};
 	return dayArray;
 }
-
+*/
 async function logDay(startDateObj, endDateObj, userName, userSettings) {
 	//var carrotStickObj = classifyDay(momentObj);
 	//fetch user carrotstick object from database
-	var startDateString = parseTime(startDateObj);
-	var endDateString = parseTime(endDateObj);
-	var key = process.env.USERKEY;
-	let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
+	let startDateString = parseTime(startDateObj);
+	let endDateString = parseTime(endDateObj);
+	let key = process.env.USERKEY;
+	//let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
 	let mutableDateTime = startDateObj; //declares a new object that will mutate as the response is processed, leaving startDate static
 	let mutableDateString = parseTime(mutableDateTime);
-	let firstDay = new DayRecord(userName, startDateObj, userSettings);
-	let dayArray = [firstDay];
-	for (row in response.data.rows) {
-		//console.log(row);
-		let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
+	var currentDay = new DayRecord(userName, startDateObj, userSettings);
+	let dayArray = [];
+	for (row of sampleResponse.rows) { // will need to change back to response.data.rows
+		//let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
 		//console.log(dayArray);
 		let rowDate = row[0].slice(0, 10);
 		let rowTime = parseInt(row[0].slice(11, 13));
-		let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = row;
 		if (mutableDateString !== rowDate) {
+			console.log(mutableDateString);
+			console.log(rowDate);
+		
+			dayArray.push(currentDay);
 			mutableDateTime = mutableDateTime.plus({days: 1});
 			mutableDateString = parseTime(mutableDateTime);
-			let newDay = new DayRecord(userName, mutableDateTime, userSettings);
-			dayArray.push(newDay);
-			currentDay = dayArray[dayArray.length - 1];
-			console.log('New day ' + currentDay);
+			var currentDay = new DayRecord(userName, mutableDateTime, userSettings);
+			//console.log('New day ' + currentDay);
 		}
-		if (!currentDay.hourArray[rowTime]) {
-			currentDay.hourArray[rowTime] = new HourRecord(rowTime, userSettings);
-			console.log('New hour ' + currentDay.hourArray[rowTime - 1])
-		}
-
-
+		//console.log(currentDay);
+		currentDay.hourArray[rowTime].parseRow(row);
+		//console.log(currentDay.hourArray[rowTime].activities[activities.length - 1]);
 	};
+	for (let day in dayArray) {
+	dayArray[day].finalise();
+	}
 	//console.log(toDayArray);
 
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});
@@ -347,7 +455,7 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 }
 
 
-
+/*
 function APIparse(response, carrotStickObj) {
 	var {rows:row} = response.data; //no variables that end in 's'
 	var dateString = response.dateString;
@@ -401,8 +509,9 @@ function APIparse(response, carrotStickObj) {
 			rl.close();
 		});*/
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
-	}
+	//}
 
+logYesterday("InterDan", userSettingsPlaceHolder);
 //logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");

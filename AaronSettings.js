@@ -301,6 +301,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 22, byProd:{

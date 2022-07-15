@@ -1,7 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const prodHour = new Schema ({
+
+const activitySchema = new Schema ({
+	appName : String,
+	totalSeconds : Number,
+	rowCategory : String,
+	rowProductivity : String,
+	activityCarrot : Number,
+	activitySTick : Number,
+})
+/*const prodHour = new Schema ({
 	"Very Unproductive" : Number,
 	"Unproductive" : Number,
 	"Neutral" : Number,
@@ -19,20 +28,23 @@ const catHour = new Schema ({
 	"Project Management" : Number,
 	"General Software Development" : Number,
 	"Editing & IDEs" : Number
-})
+})*/
 
 const hourSchema = new Schema ({
-	hourStart : Number,
-	productivity : prodHour,
-	carrotStick: Number,
-	category : catHour
+	hourStarts : Number,
+	totalTime : Number,
+	carrot: Number,
+	stick: Number,
+	activities : [activitySchema]
 })
 
 const daySchema = new Schema ({
+
+	userName : String,
+	dateObj : Date,
 	hourArray : [hourSchema],
-	date : {type: String, unique: true},
+	dateString : {type: String, unique: true},
 	dayScore : Number,
-	//dateObj :
 	})
 
 	module.exports = mongoose.model('Day', daySchema)

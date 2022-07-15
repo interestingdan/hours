@@ -44,7 +44,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static(path.join(__dirname, '/public/')));
 
-//app.listen(port, () => console.log(`App listening on port ${port}!`)); // - needed to run
+app.listen(port, () => console.log(`App listening on port ${port}!`)); // - needed to run
 
 //talk to mongoDB
 
@@ -55,16 +55,22 @@ mongoose.connect(process.env.MONGO_URI, {
 
 var db = mongoose.connection;
 
+const args = process.argv.slice(2);
+const mode = args[0];
+
 db.on('error', console.error.bind(console, 'Connection Error:'));
 
-/*db.once('open', function() {
+db.once('open', function() {
 		console.log("Connection Successful!");
-		logYesterday("InterDan", userSettingsPlaceHolder);
+		if (mode === 'write') {logYesterday("InterDan", userSettingsPlaceHolder)}
+		else if  (mode === 'test') {logYesterday("Test", userSettingsPlaceHolder)}
 		//multiDayTest("InterDan");
 		//saveSample();
+		//roundOff("InterDan");
+
 	}
 );
-*/  //- also needed to run
+  //- also needed to run
 
 
 
@@ -85,11 +91,11 @@ async function newDay(record) {
 }
 
 async function updateScore(userNameArg, scoreArg){
-	/*const user = await User.findOne({"userName" : userNameArg})
+	const user = await User.findOne({"userName" : userNameArg})
 	user.score += scoreArg;
 	const saved = await user.save()
 	const newScoreUser = await User.findOne({"userName" : userNameArg})
-	console.log("Your score is now " + newScoreUser.score)*/
+	console.log("Your score is now " + newScoreUser.score)
 };
 
 async function resetScore(userNameArg){
@@ -134,7 +140,21 @@ async function flush() {
 
 //searchAll({});
 
-
+async function roundOff(userNameArg) {
+	const user = await User.findOne({"userName" : userNameArg})
+		.catch(error => {console.error(error)})
+	if (!user) {
+		console.log("User Not Found")
+	} else {
+	console.log("Your score is: " + user.score);
+	var currScore = user.score
+	}
+	let roundScore = Math.floor(currScore)
+	user.score = roundScore;
+	const saved = await user.save()
+	const newScoreUser = await User.findOne({"userName" : userNameArg})
+	console.log("Your score is now " + newScoreUser.score)
+}
 
 function hourScore(hourArray){
 	var x;
@@ -226,12 +246,27 @@ function classifyDay(momentArg, userSettings){
 //ToDo: don't do any of this, change the above to pick a setting from an array
 
 
-function logYesterday(userName, userSettingsPlaceHolder) {
-	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
+async function logYesterday(userName, userSettingsPlaceHolder) {
+	//let yesterday = DateTime.fromObject({year: 2022, month: 5, day: 7});
+	let yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 1 });
 	//console.log(yesterday.toString());
+	let dayArray = await logDay(yesterday, yesterday, userName, userSettingsPlaceHolder.settings);
+	let totalScore = 0;
+	for (let day of dayArray) {
+		totalScore += day.dayScore;	
+	};
+	//console.log("No time logged: test function only");
+	rl.question("Enter 'Y' to commit ", async function(input) {
+		if (input === "Y" || input === "y") {
+			await updateScore(userName, Math.floor(totalScore)).catch(error => { console.error(error) });
+			process.exit()
+		}
+	
+		rl.close();
+	
+	})
+}	
 
-	logDay(yesterday, yesterday, userName, userSettingsPlaceHolder.settings);
-}
 
 function multiDayTest(userName) {
 	var yesterday = DateTime.fromObject({hour: 0, minute: 0, seconds: 0}).minus({ days: 5 });
@@ -255,61 +290,10 @@ async function saveSample() {
 	console.log('done');
 }
 
-class ActivityRecord {
- constructor (rowData) {
- let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = rowData;
- this.appName = rowActivity;
- this.totalSeconds = rowTotalSeconds;
- this.rowCategory = rowCategory;
- this.rowProductivity = rowProductivity;
- this.activityCarrot = 0;
- this.activityStick = 0;
- }
- addScore(score){
- this.activityCarrot = score;
- }
- subtractScore(score) {
- this.activityStick = score;
- }
-};
 
-class HourRecord {
-	constructor (hourNumb, hourSettings) {
-		this.hourStart = hourNumb;
-		this.activitySettings = hourSettings.byAct;
-		this.categorySettings = hourSettings.byCat;
-		this.productivitySettings = hourSettings.byProd;
-		this.activities = [];
-		this.totalTime = 0;
-		this.carrot = 0;
-		this.stick = 0;
-	}
-
-	parseRow(rowData) {
-		let newActivity = new ActivityRecord (rowData);
-		let actName = newActivity.appName;
-		if (this.activitySettings[actName] != undefined) {
-			var activityScore = this.activitySettings[newActivity.appName] * newActivity.totalSeconds * modifier;
-
-		} else if (this.categorySettings[newActivity.rowCategory] != undefined) {
-			console.log('cat found');
-			console.log(this.categorySettings[newActivity.rowCategory]);
-			var activityScore = this.activitySettings[[newActivity.rowCategory]] * newActivity.totalSeconds * modifier;
-			//console.log(activityScore);
-
-		} else {
-			console.log('prod used')
-			let prodNumber = newActivity.rowProductivity;
-			let prodLevel = function (prodNumber) {
-			-2 : "VUnp",
-			-1 : "Unpr",
-			0 : "Neut",
-			1 : "Prod",
-			2 : "VPro"
-			}
-
-
-/*			case -2:
+function prodConvert(prodNumber) {
+	switch (prodNumber){
+		case -2:
 			return "VUnp";
 			break;
 			case -1:
@@ -324,25 +308,96 @@ class HourRecord {
 			case 2:
 			return "VPro";
 			break;
-			}*/
-			var activityScore = this.activitySettings[[prodLevel]] * newActivity.totalSeconds * modifier;
-			//console.log(this.activitySettings[prodLevel]);
-			//console.log(newActivity.totalSeconds);
+	}
+/*
+	{-2 : "VUnp",
+	-1 : "Unpr",
+	0 : "Neut",
+	1 : "Prod",
+	2 : "VPro"}
+*/
+}
+
+class ActivityRecord {
+ constructor (rowData) {
+ let [,rowTotalSeconds,, rowActivity, rowCategory, rowProductivity] = rowData;
+ this.appName = rowActivity;
+ this.totalSeconds = rowTotalSeconds;
+ this.rowCategory = rowCategory;
+ this.rowProductivity = prodConvert(rowProductivity); //make rowProductivity a string not a number
+ this.activityCarrot = 0;
+ this.activityStick = 0;
+ }
+ addScore(score){
+ this.activityCarrot = score;
+ }
+ subtractScore(score){
+ this.activityStick = score;
+ }
+};
+
+class HourRecord {
+	constructor (hourNumb, hourSettings) {
+		this.hourStarts = hourNumb;
+		this.activitySettings = hourSettings.byAct;
+		this.categorySettings = hourSettings.byCat;
+		this.productivitySettings = hourSettings.byProd;
+		this.activities = [];
+		this.totalTime = 0;
+		this.carrot = 0;
+		this.stick = 0;
+	}
+
+	parseRow(rowData) {
+		let newActivity = new ActivityRecord (rowData);
+		let actName = newActivity.appName;
+		//console.log("activity name is " + actName)
+		if (this.activitySettings[actName] != undefined) {
+			var activityScore = this.activitySettings[newActivity.appName] * newActivity.totalSeconds * modifier;
+		} else if (this.categorySettings[newActivity.rowCategory] != undefined) {
+			//console.log('cat found');
+			//console.log(this.categorySettings[newActivity.rowCategory]);
+			//console.log(this.activitySettings[[newActivity.rowCategory]]);
+			var activityScore = this.categorySettings[newActivity.rowCategory] * newActivity.totalSeconds * modifier;
 			//console.log(activityScore);
+
+		} else {
+			//console.log('prod used')
+			let prodLevel = newActivity.rowProductivity;
+			var activityScore = this.productivitySettings[prodLevel] * newActivity.totalSeconds * modifier;
 			}
 		
-		//console.log(activityScore);
+
 		if (activityScore > 0) {
 				this.carrot += activityScore;
 				this.totalTime += newActivity.totalSeconds;
 				newActivity.addScore(activityScore);
 			} else {
+				//console.log("activity score is " + activityScore);
 				this.totalTime += newActivity.totalSeconds;
 				this.stick += activityScore;
 				newActivity.subtractScore(activityScore);
 			}
 		this.activities.push(newActivity);
 		}
+
+		mostly(){
+			if (this.carrot > -1 * this.stick) {
+				this.activities.sort((a,b) => {
+				return b.activityCarrot - a.activityCarrot
+			});
+			let percentage = Math.floor((this.activities[0].activityCarrot / this.carrot) * 100);
+			return `%${percentage} ${this.activities[0].appName}`
+
+			} else {
+				this.activities.sort((a,b) => {
+				return a.activityStick - b.activityStick
+			});
+			let percentage = Math.floor((this.activities[0].activityStick / this.stick) * 100);
+			return `%${percentage} ${this.activities[0].appName}`
+			}
+		}
+
 }
 
 class DayRecord {
@@ -360,12 +415,17 @@ class DayRecord {
 		}
 	}
 	finalise() {
-		for (let hour in this.hourArray) {
-			let hourScore = hour.carrot - hour.stick
-			console.log(`${hour.hourStarts} : ${hourScore}`);
-			this.dayScore += hourScore;
-			console.log(`Total score for ${dateString} : ${this.dayScore}`);
+		for (let hour of this.hourArray) {
+			// use dateObj.toJSDate() to turn dateObj into a JS DateTime Mongoose can query
+			let hourScore = hour.carrot + hour.stick
+			if (hour.carrot || hour.stick){
+				console.log(`${hour.hourStarts}: ${Math.floor(hourScore)}, ${hour.mostly()}`);
+				this.dayScore += hourScore;
+			} else {
+			console.log(`${hour.hourStarts}: `)
+			}
 		}
+		console.log(`Total score for ${this.userName} on ${this.dateString}: ${Math.floor(this.dayScore)}`);
 	}
 
 }
@@ -405,20 +465,21 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 	let startDateString = parseTime(startDateObj);
 	let endDateString = parseTime(endDateObj);
 	let key = process.env.USERKEY;
-	//let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
+	let response = await pingRescuetime(startDateString, endDateString, key, 'activity');
 	let mutableDateTime = startDateObj; //declares a new object that will mutate as the response is processed, leaving startDate static
+	
 	let mutableDateString = parseTime(mutableDateTime);
+	//mutableDateString = "2022-05-07";
 	var currentDay = new DayRecord(userName, startDateObj, userSettings);
 	let dayArray = [];
-	for (row of sampleResponse.rows) { // will need to change back to response.data.rows
+	for (row of response.data.rows) { //to work from local test, chaneg to sampleResponse.rows
 		//let currentDay = dayArray[dayArray.length - 1]; // currentDay is the last entry in dayArray
 		//console.log(dayArray);
 		let rowDate = row[0].slice(0, 10);
 		let rowTime = parseInt(row[0].slice(11, 13));
 		if (mutableDateString !== rowDate) {
-			console.log(mutableDateString);
-			console.log(rowDate);
-		
+			//console.log("mutableDateString: " + mutableDateString);
+			//console.log("rowDate: " + rowDate);
 			dayArray.push(currentDay);
 			mutableDateTime = mutableDateTime.plus({days: 1});
 			mutableDateString = parseTime(mutableDateTime);
@@ -429,9 +490,12 @@ async function logDay(startDateObj, endDateObj, userName, userSettings) {
 		currentDay.hourArray[rowTime].parseRow(row);
 		//console.log(currentDay.hourArray[rowTime].activities[activities.length - 1]);
 	};
-	for (let day in dayArray) {
-	dayArray[day].finalise();
+	dayArray.push(currentDay);
+	//console.log(dayArray[0]);
+	for (let day of dayArray) {
+	day.finalise();
 	}
+	return dayArray;
 	//console.log(toDayArray);
 
 	//queryArr.forEach(element => {console.log(element.data.row_headers)});
@@ -502,7 +566,7 @@ function APIparse(response, carrotStickObj) {
 		day.dayScore = Math.round(day.dayScore);
 		console.log(day.dayScore);
 		console.log("No time logged: test function only");
-		/*rl.question("Enter 'Y' to commit ", function(input) {
+		rl.question("Enter 'Y' to commit ", function(input) {
 			if (input === "Y" || input === "y") {
 				//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 			}
@@ -511,7 +575,6 @@ function APIparse(response, carrotStickObj) {
 		//updateScore(userName, day.dayScore).catch(error => { console.error(error) });
 	//}
 
-logYesterday("InterDan", userSettingsPlaceHolder);
 //logYesterday("InterDan");
 //resetScore("InterDan");
 //showScore("InterDan");

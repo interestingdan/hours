@@ -1,47 +1,62 @@
 const settings = {
-    kind: {
-        categories: {
-            "Video" : 0,
-            "Photos" : 0,
-            "General Communication & Scheduling": 0,
-            },
-        activities: {
+	kind: {
+		categories: {
+			"Video" : 0,
+			"Photos" : 0,
+			"General Communication & Scheduling": 0,
+			},
+		activities: {
 
-            }
-        },
-    carrotStick: {
-        workday: [
+			}
+		},
+	weekdayPicker: {
+	1 : "workday",
+	2 : "workday",
+	3 : "workday",
+	4 : "workday",
+	5 : "workday",
+	6 : "weekend",
+	7 : "weekend"
+},
+	carrotStick: {
+		workday: [
 	{	hourStarts: 0,
 		byProd:{
 			VUnp: -8,
 			Unpr: -6,
-			Neut: 0,
+			Neut: -6,
 			Prod: -6,
 			VPro: -6
 		},
 		byCat: {
-
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
 		}
-
 	},
 	{hourStarts: 1, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
 		}
 	},
 	{hourStarts: 2, byProd:{
-		VUnp: -8,
+		VUnp: -8, 
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 3, byProd:{
@@ -52,36 +67,48 @@ const settings = {
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 4, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 5, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 6, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 7, byProd:{
@@ -92,6 +119,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 8, byProd:{
@@ -102,6 +132,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 9, byProd:{
@@ -112,6 +145,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 10, byProd:{
@@ -122,6 +158,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 11, byProd:{
@@ -132,6 +171,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 12, byProd:{
@@ -142,6 +184,9 @@ const settings = {
 		VPro: 0},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 13, byProd:{
@@ -152,6 +197,9 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 14, byProd:{
@@ -161,15 +209,10 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 15, byProd:{
@@ -179,15 +222,10 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 16, byProd:{
@@ -197,15 +235,10 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 17, byProd:{
@@ -215,15 +248,10 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 18, byProd:{
@@ -233,15 +261,10 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 19, byProd:{
@@ -251,15 +274,10 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 20, byProd:{
@@ -269,15 +287,10 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 21, byProd:{
@@ -287,180 +300,131 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 22, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 23, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
-		}}],
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
+		}
+		}],
 weekend: [
 	{	hourStarts: 0,
 		byProd:{
 			VUnp: -8,
 			Unpr: -6,
-			Neut: 0,
+			Neut: -6,
 			Prod: -6,
 			VPro: -6
 		},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 
 	},
 	{hourStarts: 1, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 2, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 3, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 4, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 5, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 6, byProd:{
 		VUnp: -8,
 		Unpr: -6,
-		Neut: 0,
+		Neut: -6,
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 7, byProd:{
@@ -470,15 +434,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 8, byProd:{
@@ -488,15 +447,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 9, byProd:{
@@ -506,15 +460,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 10, byProd:{
@@ -524,15 +473,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 11, byProd:{
@@ -542,15 +486,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 12, byProd:{
@@ -560,15 +499,10 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 13, byProd:{
@@ -578,15 +512,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 14, byProd:{
@@ -596,15 +525,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 15, byProd:{
@@ -614,15 +538,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 16, byProd:{
@@ -632,15 +551,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 17, byProd:{
@@ -650,15 +564,10 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 18, byProd:{
@@ -668,15 +577,10 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 19, byProd:{
@@ -686,15 +590,10 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 20, byProd:{
@@ -704,15 +603,10 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 21, byProd:{
@@ -722,15 +616,10 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 22, byProd:{
@@ -740,15 +629,10 @@ weekend: [
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	},
 	{hourStarts: 23, byProd:{
@@ -758,20 +642,15 @@ weekend: [
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-			"General Social Networking" : -8,
-			"Games" : -8,
-			"Instant Message" : -6,
-			"Writing" : -6,
-			"Video" : -8,
-			"Photos" : -8,
-			"Project Management" : -6,
-			"General Software Development" : -6,
-			"Editing & IDEs" : -6
+			"General Communication & Scheduling": 0,
+		},
+		byAct: {
+		
 		}
 	}
 ]
-        }
-    };
+		}
+	};
 
 
 

@@ -1,0 +1,1477 @@
+{
+  "notes": "data is an array of arrays (rows), column names for rows in row_headers",
+  "row_headers": [
+    "Date",
+    "Time Spent (seconds)",
+    "Number of People",
+    "Activity",
+    "Category",
+    "Productivity"
+  ],
+  "rows": [
+    [
+      "2022-05-07T09:00:00",
+      25,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T09:00:00",
+      17,
+      1,
+      "mobile - seekrtech.sleep",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      1286,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T10:00:00",
+      869,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T10:00:00",
+      623,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      379,
+      1,
+      "Google Chrome for Android",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      278,
+      1,
+      "Instagram for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T10:00:00",
+      43,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      41,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      40,
+      1,
+      "Telegram Messenger",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T10:00:00",
+      40,
+      1,
+      "mobile - com.digitalextremes.warframenexus",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T11:00:00",
+      581,
+      1,
+      "New York Times",
+      "General News & Opinion",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      477,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T11:00:00",
+      429,
+      1,
+      "mobile - com.habitrpg.android.habitica",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T11:00:00",
+      391,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      302,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      139,
+      1,
+      "messenger.com",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      132,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      92,
+      1,
+      "Trello for Android",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T11:00:00",
+      58,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      48,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T11:00:00",
+      17,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T11:00:00",
+      3,
+      1,
+      "1password 7",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      736,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      482,
+      1,
+      "facebook.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      188,
+      1,
+      "chrome.google.com",
+      "General Shopping",
+      1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      158,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      123,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      80,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T12:00:00",
+      65,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T12:00:00",
+      35,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      27,
+      1,
+      "Instagram for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T12:00:00",
+      20,
+      1,
+      "messenger.com",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T12:00:00",
+      7,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T12:00:00",
+      5,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T13:00:00",
+      1018,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T13:00:00",
+      732,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      607,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      334,
+      1,
+      "Instagram for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      180,
+      1,
+      "chrome.google.com",
+      "General Shopping",
+      1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      125,
+      1,
+      "newtab",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      61,
+      1,
+      "Messenger for Android",
+      "Instant Message",
+      1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      56,
+      1,
+      "messages.google.com",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T13:00:00",
+      18,
+      1,
+      "facebook.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      17,
+      1,
+      "warframe.fandom.com",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T13:00:00",
+      6,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T13:00:00",
+      3,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T14:00:00",
+      382,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      352,
+      1,
+      "mobile - com.digitalextremes.warframenexus",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      336,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      303,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T14:00:00",
+      270,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T14:00:00",
+      131,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T14:00:00",
+      124,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T14:00:00",
+      16,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      2,
+      1,
+      "newtab",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      2,
+      1,
+      "warframe.fandom.com",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T14:00:00",
+      1,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      949,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      615,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      307,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T15:00:00",
+      82,
+      1,
+      "Instagram for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      51,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      43,
+      1,
+      "mobile - com.samsung.android.incallui",
+      "Voice Chat",
+      2
+    ],
+    [
+      "2022-05-07T15:00:00",
+      18,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      13,
+      1,
+      "archive utility",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      7,
+      1,
+      "mobile - com.sec.android.app.clockpackage",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      7,
+      1,
+      "reddit.com",
+      "General News & Opinion",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      6,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      5,
+      1,
+      "mobile - com.samsung.android.dialer",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      5,
+      1,
+      "Messenger for Android",
+      "Instant Message",
+      1
+    ],
+    [
+      "2022-05-07T15:00:00",
+      3,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T15:00:00",
+      2,
+      1,
+      "warframe.fandom.com",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T16:00:00",
+      1208,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T16:00:00",
+      933,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T16:00:00",
+      625,
+      1,
+      "mobile - com.samsung.android.dialer",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      532,
+      1,
+      "youtube.com",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      422,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      208,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      134,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      126,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      86,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T16:00:00",
+      44,
+      1,
+      "mobile - com.samsung.android.incallui",
+      "Voice Chat",
+      2
+    ],
+    [
+      "2022-05-07T16:00:00",
+      16,
+      1,
+      "1password 7",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T16:00:00",
+      11,
+      1,
+      "quicktime player",
+      "General Entertainment",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      7,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      4,
+      1,
+      "developer.mozilla.org",
+      "Engineering & Technology",
+      2
+    ],
+    [
+      "2022-05-07T16:00:00",
+      3,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T16:00:00",
+      3,
+      1,
+      "newtab",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T16:00:00",
+      3,
+      1,
+      "dock",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T17:00:00",
+      1076,
+      1,
+      "facebook.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T17:00:00",
+      741,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      524,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T17:00:00",
+      492,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T17:00:00",
+      379,
+      1,
+      "ishoblog.com",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      351,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      330,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      330,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T17:00:00",
+      148,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      90,
+      1,
+      "telegram",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      67,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      55,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T17:00:00",
+      28,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T17:00:00",
+      11,
+      1,
+      "Preview",
+      "General Reference & Learning",
+      2
+    ],
+    [
+      "2022-05-07T18:00:00",
+      1109,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      847,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T18:00:00",
+      817,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      389,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      167,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      108,
+      1,
+      "telegram",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      91,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      80,
+      1,
+      "nintendo.com",
+      "Games",
+      -2
+    ],
+    [
+      "2022-05-07T18:00:00",
+      35,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T18:00:00",
+      20,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T18:00:00",
+      3,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      2,
+      1,
+      "youtube.com",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T18:00:00",
+      1,
+      1,
+      "mobile - com.digitalextremes.warframenexus",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      1703,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      523,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T19:00:00",
+      437,
+      1,
+      "Messenger for Android",
+      "Instant Message",
+      1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      220,
+      1,
+      "youtube.com",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      215,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      212,
+      1,
+      "iratus",
+      "Games",
+      -2
+    ],
+    [
+      "2022-05-07T19:00:00",
+      103,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      82,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      78,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      66,
+      1,
+      "Steam",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      35,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      21,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      11,
+      1,
+      "Windows Explorer",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      10,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T19:00:00",
+      8,
+      1,
+      "Google Chrome for Android",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T19:00:00",
+      4,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      1898,
+      1,
+      "mobile - com.jee.timer",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      1321,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T20:00:00",
+      694,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      215,
+      1,
+      "Preview",
+      "General Reference & Learning",
+      2
+    ],
+    [
+      "2022-05-07T20:00:00",
+      208,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      152,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      20,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T20:00:00",
+      13,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T20:00:00",
+      7,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      1567,
+      1,
+      "Firefox",
+      "Photos",
+      -2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      706,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      309,
+      1,
+      "Finder",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T21:00:00",
+      291,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      246,
+      1,
+      "google.com",
+      "Search",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      153,
+      1,
+      "thirdcoastreview.com",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      124,
+      1,
+      "twitter.com",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T21:00:00",
+      114,
+      1,
+      "VLC Media Player",
+      "Video",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      92,
+      1,
+      "Preview",
+      "General Reference & Learning",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      82,
+      1,
+      "telegram",
+      "Instant Message",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      55,
+      1,
+      "mobile - com.habitrpg.android.habitica",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T21:00:00",
+      55,
+      1,
+      "Terminal",
+      "Systems Operations",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      55,
+      1,
+      "RescueTime for Android",
+      "Intelligence",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      53,
+      1,
+      "qbittorrent",
+      "File Sharing",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      23,
+      1,
+      "patreon.com",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T21:00:00",
+      15,
+      1,
+      "journal.chestnet.org",
+      "General Business",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      10,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      7,
+      1,
+      "mobile - com.sec.android.app.clockpackage",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T21:00:00",
+      4,
+      1,
+      "ncbi.nlm.nih.gov",
+      "Engineering & Technology",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      4,
+      1,
+      "npr.org",
+      "General News & Opinion",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      3,
+      1,
+      "chronicallycaroline.com",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T21:00:00",
+      2,
+      1,
+      "idp.springer.com",
+      "Search",
+      2
+    ],
+    [
+      "2022-05-07T21:00:00",
+      2,
+      1,
+      "solvecfs.org",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T22:00:00",
+      646,
+      1,
+      "google.com",
+      "Search",
+      2
+    ],
+    [
+      "2022-05-07T22:00:00",
+      472,
+      1,
+      "Twitter for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      412,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ],
+    [
+      "2022-05-07T22:00:00",
+      319,
+      1,
+      "mobile - cc.forestapp",
+      "General Utilities",
+      1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      202,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T22:00:00",
+      113,
+      1,
+      "mobile - com.habitrpg.android.habitica",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      95,
+      1,
+      "trello.com",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      65,
+      1,
+      "saveorquit.com",
+      "Uncategorized",
+      0
+    ],
+    [
+      "2022-05-07T22:00:00",
+      59,
+      1,
+      "patreon.com",
+      "General Entertainment",
+      -1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      32,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      8,
+      1,
+      "google chrome",
+      "Browsers",
+      0
+    ],
+    [
+      "2022-05-07T22:00:00",
+      8,
+      1,
+      "mullvad vpn",
+      "Internet Utilities",
+      1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      7,
+      1,
+      "habitica.com",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T22:00:00",
+      5,
+      1,
+      "Terminal",
+      "Systems Operations",
+      2
+    ],
+    [
+      "2022-05-07T23:00:00",
+      142,
+      1,
+      "trello.com",
+      "General Communication & Scheduling",
+      1
+    ],
+    [
+      "2022-05-07T23:00:00",
+      38,
+      1,
+      "mobile - bearface.games.merchant",
+      "Games",
+      0
+    ],
+    [
+      "2022-05-07T23:00:00",
+      7,
+      1,
+      "Facebook for Android",
+      "General Social Networking",
+      -1
+    ],
+    [
+      "2022-05-07T23:00:00",
+      2,
+      1,
+      "Samsung Touchwiz Launcher",
+      "General Utilities",
+      0
+    ]
+  ]
+}

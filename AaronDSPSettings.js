@@ -12,7 +12,7 @@ const settings = {
 	weekdayPicker: {
 	1 : "workday",
 	2 : "workday",
-	3 : "workday",
+	3 : "weekend",
 	4 : "workday",
 	5 : "workday",
 	6 : "weekend",
@@ -30,6 +30,8 @@ const settings = {
 		},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
+		
 		},
 		byAct: {
 		}
@@ -42,6 +44,7 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		}
@@ -118,6 +121,7 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"Games": 0
 
 		},
 		byAct: {
@@ -131,6 +135,7 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"Games": 0
 
 		},
 		byAct: {
@@ -144,6 +149,7 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"Games": 0
 
 		},
 		byAct: {
@@ -222,6 +228,7 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"Games": 0
 
 		},
 		byAct: {
@@ -235,6 +242,7 @@ const settings = {
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"Games": 0
 
 		},
 		byAct: {
@@ -248,6 +256,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -261,6 +270,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -274,6 +284,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -288,6 +299,7 @@ const settings = {
 		VPro: 8},
 		byCat: {
 
+
 		},
 		byAct: {
 		
@@ -301,6 +313,7 @@ const settings = {
 		VPro: 0},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -314,6 +327,7 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0
 		},
 		byAct: {
 		
@@ -327,6 +341,7 @@ const settings = {
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0
 		},
 		byAct: {
 		
@@ -343,6 +358,7 @@ weekend: [
 		},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -357,6 +373,7 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -434,6 +451,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -447,6 +465,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -460,6 +479,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -473,6 +493,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -486,6 +507,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -512,6 +534,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -525,6 +548,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -538,6 +562,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -551,6 +576,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -564,6 +590,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -577,6 +604,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -590,6 +618,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
+			"General Social Networking": -6,
 
 		},
 		byAct: {
@@ -617,6 +646,7 @@ weekend: [
 		VPro: 0},
 		byCat: {
 
+
 		},
 		byAct: {
 		
@@ -630,6 +660,7 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -643,6 +674,7 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		

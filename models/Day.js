@@ -45,6 +45,6 @@ const daySchema = new Schema ({
 	hourArray : [hourSchema],
 	dateString : {type: String, unique: true},
 	dayScore : Number,
-	})
+})
 
 	module.exports = mongoose.model('Day', daySchema)

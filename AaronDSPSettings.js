@@ -56,7 +56,8 @@ const settings = {
 		Prod: -6,
 		VPro: -6},
 		byCat: {
-
+			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -256,7 +257,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+
 
 		},
 		byAct: {
@@ -270,7 +271,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+
 
 		},
 		byAct: {
@@ -284,7 +285,7 @@ const settings = {
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+
 
 		},
 		byAct: {
@@ -387,6 +388,7 @@ weekend: [
 		VPro: -6},
 		byCat: {
 			"General Communication & Scheduling": 0,
+			"Instant Message": 0,
 		},
 		byAct: {
 		
@@ -450,8 +452,7 @@ weekend: [
 		Neut: 0,
 		Prod: 6,
 		VPro: 8},
-		byCat: {
-			"General Social Networking": -6,
+		byCat: {	
 
 		},
 		byAct: {
@@ -465,7 +466,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -479,7 +480,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -493,8 +494,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
-
+		
 		},
 		byAct: {
 		
@@ -507,7 +507,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -534,7 +534,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -548,7 +548,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -562,7 +562,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -576,7 +576,7 @@ weekend: [
 		Prod: 6,
 		VPro: 8},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -590,7 +590,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -604,7 +604,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+		
 
 		},
 		byAct: {
@@ -618,7 +618,7 @@ weekend: [
 		Prod: 0,
 		VPro: 0},
 		byCat: {
-			"General Social Networking": -6,
+
 
 		},
 		byAct: {
